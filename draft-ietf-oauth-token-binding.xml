@@ -3,7 +3,7 @@
 <!DOCTYPE rfc PUBLIC "-//IETF//DTD RFC 2629//EN"
 "http://xml2rfc.tools.ietf.org/authoring/rfc2629.dtd">
 
-<rfc category="std" docName="draft-jones-oauth-token-binding-00" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-oauth-token-binding-00" ipr="trust200902">
 
   <?rfc toc="yes" ?>
   <?rfc tocdepth="5" ?>
@@ -40,7 +40,7 @@
       </address>
     </author>
 
-    <date day="4" month="July" year="2016" />
+    <date day="7" month="September" year="2016" />
 
     <area>Security</area>
     <workgroup>OAuth Working Group</workgroup>
@@ -344,8 +344,8 @@
       <section anchor="ASMetadata" title="Token Binding Authorization Server Metadata">
 	<t>
 	  Authorization Servers supporting Token Binding that also support
-	  <xref target="OAuth.Discovery">OAuth 2.0 Discovery Metadata</xref>
-	  use this metadata values to register their support for Token Binding
+	  <xref target="OAuth.AuthorizationMetadata">OAuth 2.0 Authorization Server Metadata</xref>
+	  use these metadata values to register their support for Token Binding
 	  of Access Tokens and Refresh Tokens:
 	</t>
 	<t>
@@ -461,7 +461,7 @@
 	  This specification registers the following discovery metadata definitions
 	  in the IANA "OAuth Authorization Server Discovery Metadata" registry
 	  <!-- <xref target="IANA.OAuth.Parameters"/> TBD Uncomment once registry has been established -->
-	  established by <xref target="OAuth.Discovery"/>:
+	  established by <xref target="OAuth.AuthorizationMetadata"/>:
 	</t>
 
 	<section anchor="DiscContents" title="Registry Contents">
@@ -514,10 +514,10 @@
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7662"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7800"?>
 
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-protocol-06.xml' ?>
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-https-03.xml' ?>
+      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-protocol-10.xml' ?>
+      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-https-06.xml' ?>
 
-      <reference anchor="OpenID.TokenBinding" target="http://self-issued.info/docs/openid-connect-token-bound-authentication-1_0.html">
+      <reference anchor="OpenID.TokenBinding" target="http://openid.net/specs/openid-connect-token-bound-authentication-1_0.html">
         <front>
           <title>OpenID Connect Token Bound Authentication 1.0</title>
 
@@ -590,9 +590,9 @@
     <references title="Informative References">
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7591"?>
 
-      <reference anchor="OAuth.Discovery" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-02">
+      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-04">
         <front>
-	  <title abbrev="OAuth 2.0 Discovery">OAuth 2.0 Discovery</title>
+	  <title>OAuth 2.0 Authorization Server Metadata</title>
 
 	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
 	    <organization abbrev="Microsoft">Microsoft</organization>
@@ -618,7 +618,7 @@
 	    </address>
 	  </author>
 
-	  <date day="21" month="March" year="2016" />
+	  <date day="3" month="August" year="2016" />
         </front>
 	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-02"/>
       </reference>
@@ -695,7 +695,7 @@
 	-00
         <list style="symbols">
 	  <t>
-	    Created the initial version.
+	    Created the initial working group version from draft-jones-oauth-token-binding-00.
 	  </t>
 	</list>
       </t>
