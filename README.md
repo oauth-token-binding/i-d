@@ -5,7 +5,7 @@ This is the working area for the IETF OAUTH WG's draft of OAuth 2.0 Token Bindin
 Be aware that all contributions to the specification fall under the "NOTE WELL"
 terms outlined below.
 
-* TBD Working Group Draft
+* [Working Group Draft] (https://tools.ietf.org/html/draft-ietf-oauth-token-binding)
 * [Working Group] (https://datatracker.ietf.org/wg/oauth)
 * [Working Group Mailing List] (https://www.ietf.org/mailman/listinfo/OAUTH)
 
