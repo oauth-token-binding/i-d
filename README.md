@@ -1,9 +1,11 @@
 # Token Binding for OAuth 2.0 
 
-This is the working area for the IETF OAUTH WG's draft of OAuth 2.0 Token Binding
+This is the working area for the IETF OAUTH Working Group's draft of OAuth 2.0 Token Binding.
 
 Be aware that all contributions to the specification fall under the "NOTE WELL"
 terms outlined below.
+
+This [link yield an HTML rendering of the editors' draft](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc.cgi?input=&url=https%3A%2F%2Fraw.githubusercontent.com%2Foauth-token-binding%2Fi-d%2Fmaster%2Fdraft-ietf-oauth-token-binding.xml&modeAsFormat=html%2Fascii&type=ascii&Submit=Submit) from the latest xml source. Additional Working Group links follow.
 
 * [Working Group Draft] (https://tools.ietf.org/html/draft-ietf-oauth-token-binding)
 * [Working Group] (https://datatracker.ietf.org/wg/oauth)
