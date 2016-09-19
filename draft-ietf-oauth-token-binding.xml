@@ -180,8 +180,8 @@
       </t>
       <t>
 	Note that to obtain this Token Binding ID,
-	the client needs to establish a TLS connection between itself and the protected resource
-	prior to making the authorization request so that the Provided Token Binding ID
+	the client may need to establish a TLS connection between itself and the protected resource
+	prior to making the request to the authorization server so that the Provided Token Binding ID
 	for the TLS connection to the protected resource can be obtained.
 	How the client retrieves this Token Binding ID
 	from the underlying Token Binding API is implementation and operating system specific.
@@ -190,8 +190,13 @@
 	and then later use that key when the TLS connection to the protected resource is established.
       </t>
 
-      <section anchor="InitialAccessToken" title="Initial Access Tokens">
+      <section anchor="AccessTokenFromAuthzEndpoint"
+               title="Access Tokens Issued from the Authorization Endpoint">
 	<t>
+    For access tokens returned directly from the authorization endpoint,
+    such as with the implicit grant defined in Section 4.2 of
+    OAuth 2.0<xref target="RFC6749"/>, the Referred Token Binding ID
+    used to bind the access token is sent with the authorization request.
 	  Upon receiving the Referred Token Binding ID
 	  in an authorization request,
 	  the authorization server then records it
@@ -203,9 +208,15 @@
 	</t>
       </section>
 
-      <section anchor="RefreshedAccessToken" title="Refreshed Access Tokens">
+      <section anchor="AccessTokenFromTokenEndpoint"
+               title="Access Tokens Issued from the Token Endpoint">
 	<t>
-	  Access tokens obtained from refresh requests can also be token bound.
+    For access tokens returned from the token endpoint,
+    the Referred Token Binding ID used to bind the access token
+    is sent with the the token request.
+    This applies to all the conventional grant types from OAuth 2.0 <xref target="RFC6749"/>,
+    including but not limited to refresh and authorization code token requests,
+    as well as extension grants, such as JWT assertion authorization grants <xref target="RFC7523"/>.
 	  In this case, the Token Binding ID
 	  of the TLS connection between the client and the protected resource
 	  is sent to the authorization server at the token endpoint as the
@@ -628,6 +639,7 @@
 
     <references title="Informative References">
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7591"?>
+      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7523"?>
 
       <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-04">
         <front>
