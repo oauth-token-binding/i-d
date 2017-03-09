@@ -54,10 +54,11 @@
       <t>
 	This specification enables OAuth 2.0 implementations to apply
 	Token Binding to Access Tokens, Authorization Codes, and Refresh Tokens.
-	This cryptographically binds these tokens to the TLS connections
-	over which they are intended to be used.
-	This use of Token Binding protects these tokens
-	from man-in-the-middle and token export and replay attacks.
+  This cryptographically binds these tokens to a client's Token Binding key
+  pair, possession of which is proven on the TLS connections over which the
+  tokens are intended to be used.
+  This use of Token Binding protects these tokens
+  from man-in-the-middle and token export and replay attacks.
        </t>
     </abstract>
   </front>
@@ -71,8 +72,9 @@
 	<xref target="I-D.ietf-tokbind-protocol">The Token Binding Protocol Version 1.0</xref>
 	and <xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>)
 	to Access Tokens, Authorization Codes, and Refresh Tokens.
-	This cryptographically binds these tokens to the TLS connections
-	over which they are intended to be used.
+  This cryptographically binds these tokens to a client's Token Binding key
+  pair, possession of which is proven on the TLS connections over which the
+  tokens are intended to be used.
 	This use of Token Binding protects these tokens
 	from man-in-the-middle and token export and replay attacks.
       </t>
@@ -106,8 +108,9 @@
 	Token Binding of refresh tokens is a straightforward first-party scenario,
 	applying term "first-party" as used in
 	<xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>.
-	It cryptographically binds the refresh token to the TLS connection
-	between the client and the token endpoint.
+  It cryptographically binds the refresh token to the client's Token Binding key
+  pair, possession of which is proven on the TLS connections between the
+  client and the token endpoint.
 	This case is straightforward because the refresh token is
 	both retrieved by the client from the token endpoint
 	and sent by the client to the token endpoint.
@@ -145,8 +148,10 @@
 
     <section anchor="AccessTokenBinding" title="Token Binding for Access Tokens">
       <t>
-	Token Binding for access tokens cryptographically binds the access token
-	to the TLS connection between the client and the protected resource.
+  Token Binding for access tokens cryptographically binds the access token
+  to the client's Token Binding key
+  pair, possession of which is proven on the TLS connections between the
+  client and the the protected resource.
 	Token Binding is applied to access tokens in a similar manner to that
 	described in Section 4 (Federation Use Cases) of 
 	<xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>.
@@ -293,8 +298,8 @@
       <section anchor="NativeAppClients" title="Native Application Clients">
         <t>
           This section describes a (PKCE) method suitable for native application clients
-          that cryptographically binds the authorization code to a Token Binding key on the client,
-          which the client proves possession of during the access token request
+          that cryptographically binds the authorization code to a Token Binding key pair on the client,
+          which the client proves possession of on the TLS connection during the access token request
           containing the authorization code.
           The authorization code is bound to the Token Binding ID that the native application
           client uses to resolve the code at the token endpoint. This binding ensures that
@@ -361,7 +366,7 @@
         <t>
           This section describes a (PKCE) method suitable for web server clients,
           which cryptographically binds the authorization code to a Token Binding
-          key on the browser.
+          key pair on the browser.
           The authorization code is bound to the Token Binding ID that the browser
           uses to deliver the code to a web server client, which is sent to the
           authorization sever as the Referred Token Binding ID during the authorization request.
