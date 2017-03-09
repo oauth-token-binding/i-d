@@ -931,6 +931,7 @@
   -02
     <list style="symbols">
       <t>Added a section on Token Binding for authorization codes with one variation for native clients and one for web server clients.</t>
+      <t>Update language to reflect that the binding is to the token binding key pair and that proof of possession of that key is done on the TLS connection.</t>
       <t>Update Token Binding references.</t>
     </list>
 	-01
