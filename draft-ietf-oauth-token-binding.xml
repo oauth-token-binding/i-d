@@ -919,6 +919,25 @@
 	    What should we do in the case that a refresh request for a token bound access token
 	    is received when the refresh token used in the request is not token bound?
 	  </t>
+    <t>
+      Should the scope of this document include standardizing or recommending how to convey token binding
+      information of an access token via RFC 7662 OAuth 2.0 Token Introspection?
+    </t>
+    <t>
+      Should the scope of this document include standardization or guidance on token binding
+      of JWT Client Authentication and/or Authorization Grants from RFC 7523?
+    </t>
+    <t>
+      The <xref target="Metadata">Metadata</xref> and
+      <xref target="Phasing"> what can and cannot be reliably inferred from it</xref>
+      need additional evaluation and work.
+      <xref target="OAuth.ResourceMetadata">OAuth 2.0 Protected Resource Metadata</xref>
+      is no longer a going concern but is currently referenced herein.
+      Boolean values do not adequately convey TB support as different components may support
+      different key parameters types.
+      And successful negotiation likely doesn't provide the application layer info about
+      all the supported key parameters types but rather just the one that was negotiated.
+    </t>
         </list>
       </t>
     </section>
@@ -931,6 +950,7 @@
     <list style="symbols">
       <t>Added a section on Token Binding for authorization codes with one variation for native clients and one for web server clients.</t>
       <t>Update language to reflect that the binding is to the token binding key pair and that proof of possession of that key is done on the TLS connection.</t>
+      <t>Added a few Open Issues so so they are tracked in the document.</t>
       <t>Update Token Binding references.</t>
     </list>
 	-01
