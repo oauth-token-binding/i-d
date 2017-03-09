@@ -321,7 +321,7 @@
             The value of the <spanx style="verb">code_challenge</spanx> parameter is the base64url encoding
             (per Section 5 of <xref target="RFC4648"/> with all trailing pad ('=')
             characters omitted and without the inclusion of any line breaks or whitespace)
-            of the <xref target="RFC6234">SHA-256 hash</xref> of the Provided Token Binding ID
+            of the SHA-256 hash of the Provided Token Binding ID
             that the client will use when calling the authorization server's
             token endpoint. Note that, prior to making the authorization request, the client may need to
             establish a TLS connection between itself and the authorization server's token endpoint in order to establish
@@ -727,7 +727,6 @@
     <references title="Normative References">
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4648"?>  <!-- base64 -->
-      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6234"?>  <!-- SHA -->
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6749"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7230"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7636"?>
