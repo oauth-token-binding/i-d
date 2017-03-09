@@ -151,7 +151,7 @@
   Token Binding for access tokens cryptographically binds the access token
   to the client's Token Binding key
   pair, possession of which is proven on the TLS connections between the
-  client and the the protected resource.
+  client and the protected resource.
 	Token Binding is applied to access tokens in a similar manner to that
 	described in Section 4 (Federation Use Cases) of 
 	<xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>.
@@ -219,7 +219,7 @@
 	<t>
     For access tokens returned from the token endpoint,
     the Referred Token Binding ID used to bind the access token
-    is sent with the the token request.
+    is sent with the token request.
     This applies to all the conventional grant types from OAuth 2.0 <xref target="RFC6749"/>,
     including but not limited to refresh and authorization code token requests,
     as well as extension grants, such as JWT assertion authorization grants <xref target="RFC7523"/>.
@@ -290,7 +290,7 @@
       One is appropriate for native application clients and the other for web server clients.
       Both utilize the extensible framework of
       <xref target="RFC7636">Proof Key for Code Exchange (PKCE)</xref>, which enables the
-      client to show possession of a certain key when exchanging the code for tokens.
+      client to show possession of a certain key when exchanging the authorization code for tokens.
       The following subsections individually describe each of the two PKCE methods respectively.
 
     </t>
@@ -302,7 +302,7 @@
           which the client proves possession of on the TLS connection during the access token request
           containing the authorization code.
           The authorization code is bound to the Token Binding ID that the native application
-          client uses to resolve the code at the token endpoint. This binding ensures that
+          client uses to resolve the authorization code at the token endpoint. This binding ensures that
           the client that made the authorization request is the same client that
           is presenting the authorization code.
         </t>
@@ -315,11 +315,11 @@
           </t>
           <t>
             For this Token Binding method of PKCE, <spanx style='verb'>tb_s256</spanx>
-            is used for the value of the <spanx style="verb">code_challenge_method</spanx> parameter.
+            is used as the value of the <spanx style="verb">code_challenge_method</spanx> parameter.
           </t>
           <t>
             The value of the <spanx style="verb">code_challenge</spanx> parameter is the base64url encoding
-            (per Section 5 of <xref target="RFC4648"/> with all trailing pad ('=')
+            (per Section 5 of <xref target="RFC4648"/> with all trailing padding ('=')
             characters omitted and without the inclusion of any line breaks or whitespace)
             of the SHA-256 hash of the Provided Token Binding ID
             that the client will use when calling the authorization server's
@@ -330,7 +330,7 @@
           <t>
             When the authorization server issues the authorization code in the authorization
             response, it associates the code challenge and method values
-            with the authorization code so they can be verified later when the code is
+            with the authorization code so they can be verified later when the authorization code is
             presented in the access token request.
           </t>
         </section>
@@ -345,7 +345,7 @@
             is included in the access token request. The authorization server extracts the
             Provided Token Binding ID from the header value, hashes it with SHA-256, and compares
             it to the <spanx style="verb">code_challenge</spanx> value previously associated with the authorization code.
-            If the values match, the token endpoint MUST continue processing
+            If the values match, the token endpoint continues processing
             as normal (as defined by <xref target="RFC6749">OAuth 2.0</xref>).  If the values do not
             match, an error response indicating "invalid_grant" MUST be returned.
           </t>
@@ -368,7 +368,7 @@
           which cryptographically binds the authorization code to a Token Binding
           key pair on the browser.
           The authorization code is bound to the Token Binding ID that the browser
-          uses to deliver the code to a web server client, which is sent to the
+          uses to deliver the authorization code to a web server client, which is sent to the
           authorization sever as the Referred Token Binding ID during the authorization request.
           The web server client
           conveys the Token Binding ID to the authorization sever when making
@@ -386,9 +386,9 @@
           <t>
             The client must send the authorization request through the browser such that
             the Token Binding ID established between the browser and itself is revealed
-            to the the authorization server's authorization endpoint as the Referred Token Binding ID.
-            Typically this is done with an HTTP redirection response and the
-            <spanx style="verb">Include-Referred-Token-Binding-ID</spanx> header as defined in
+            to the authorization server's authorization endpoint as the Referred Token Binding ID.
+            Typically, this is done with an HTTP redirection response and the
+            <spanx style="verb">Include-Referred-Token-Binding-ID</spanx> header, as defined in
             <xref target="I-D.ietf-tokbind-https">Section 5.3 of Token Binding over HTTP</xref>.
           </t>
           <t>
@@ -405,7 +405,7 @@
           <t>
             When the authorization server issues the authorization code in the authorization
             response, it associates the Token Binding ID (or hash thereof) and code challenge method
-            with the authorization code so they can be verified later when the code is
+            with the authorization code so they can be verified later when the authorization code is
             presented in the access token request.
           </t>
         </section>
@@ -417,7 +417,7 @@
             extracts the Provided Token Binding ID from the
             <spanx style="verb">Sec-Token-Binding</spanx> header of the request.
             The client sends the base64url encoded
-            (per Section 5 of <xref target="RFC4648"/> with all trailing pad ('=')
+            (per Section 5 of <xref target="RFC4648"/> with all trailing padding ('=')
             characters omitted and without the inclusion of any line breaks or whitespace)
             Provided Token Binding ID as the value of the
             <spanx style="verb">code_verifier</spanx> parameter in the access token request
@@ -427,7 +427,7 @@
             The authorization server compares the value of the
             <spanx style="verb">code_verifier</spanx> parameter
             to the Token Binding ID value previously associated with the authorization code.
-            If the values match, the token endpoint MUST continue processing
+            If the values match, the token endpoint continues processing
             as normal (as defined by <xref target="RFC6749">OAuth 2.0</xref>).  If the values do not
             match, an error response indicating "invalid_grant" MUST be returned.
           </t>
@@ -608,7 +608,7 @@
 	<?rfc subcompact="no"?>
       </section>
 
-      <section anchor="DiscRegistration" title="OAuth Authorization Server Metadata Registration">
+      <section anchor="ASMetadataRegistration" title="OAuth Authorization Server Metadata Registration">
 	<t>
 	  This specification registers the following metadata definitions
 	  in the IANA "OAuth Authorization Server Metadata" registry
@@ -616,7 +616,7 @@
 	  established by <xref target="OAuth.AuthorizationMetadata"/>:
 	</t>
 
-	<section anchor="DiscContents" title="Registry Contents">
+	<section anchor="ASMetadataContents" title="Registry Contents">
 	  <t>
 	    <?rfc subcompact="yes"?>
 	    <list style="symbols">
@@ -656,15 +656,15 @@
 	<?rfc subcompact="no"?>
       </section>
 
-      <section anchor="ResourceRegistration" title="OAuth Protected Resource Metadata Registration">
+      <section anchor="ResourceMetadataRegistration" title="OAuth Protected Resource Metadata Registration">
 	<t>
 	  This specification registers the following client metadata definition
 	  in the IANA "OAuth Protected Resource Metadata" registry
-	  <xref target="IANA.OAuth.Parameters"/>
+	  <!-- <xref target="IANA.OAuth.Parameters"/> TBD Uncomment once registry has been established -->
 	  established by <xref target="OAuth.ResourceMetadata"/>:
 	</t>
 
-	<section anchor="ResourceContents" title="Registry Contents">
+	<section anchor="ResourceMetadataContents" title="Registry Contents">
 	  <t>
 	    <?rfc subcompact="yes"?>
 	    <list style="symbols">
@@ -760,7 +760,40 @@
         </front>
       </reference>
 
-      <reference anchor="OAuth.ResourceMetadata" target="http://tools.ietf.org/html/draft-jones-oauth-resource-metadata-00">
+      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-05">
+        <front>
+	  <title>OAuth 2.0 Authorization Server Metadata</title>
+
+	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
+	    <organization abbrev="Microsoft">Microsoft</organization>
+	    <address>
+	      <email>mbj@microsoft.com</email>
+	      <uri>http://self-issued.info/</uri>
+	    </address>
+	  </author>
+
+	  <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
+	    <organization abbrev="NRI">Nomura Research Institute, Ltd.</organization>
+	    <address>
+	      <email>n-sakimura@nri.co.jp</email>
+	      <uri>http://nat.sakimura.org/</uri>
+	    </address>
+	  </author>
+
+	  <author fullname="John Bradley" initials="J." surname="Bradley">
+	    <organization abbrev="Ping Identity">Ping Identity</organization>
+	    <address>
+	      <email>ve7jtb@ve7jtb.com</email>
+	      <uri>http://www.thread-safe.com/</uri>
+	    </address>
+	  </author>
+
+	  <date day="19" month="January" year="2017" />
+        </front>
+	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-05"/>
+      </reference>
+
+      <reference anchor="OAuth.ResourceMetadata" target="http://tools.ietf.org/html/draft-jones-oauth-resource-metadata-01">
         <front>
 	  <title abbrev="OAuth 2.0 Protected Resource Metadata">OAuth 2.0 Protected Resource Metadata</title>
 
@@ -779,9 +812,9 @@
 	    </address>
 	  </author>
 
-	  <date day="3" month="August" year="2016" />
+	  <date day="19" month="January" year="2017" />
         </front>
-	<seriesInfo name="Internet-Draft" value="draft-jones-oauth-resource-metadata-00"/>
+	<seriesInfo name="Internet-Draft" value="draft-jones-oauth-resource-metadata-01"/>
       </reference>
 
       <reference anchor="JWT" target="http://tools.ietf.org/html/rfc7519">
@@ -837,39 +870,6 @@
     <references title="Informative References">
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7591"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7523"?>
-
-      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-04">
-        <front>
-	  <title>OAuth 2.0 Authorization Server Metadata</title>
-
-	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-	    <organization abbrev="Microsoft">Microsoft</organization>
-	    <address>
-	      <email>mbj@microsoft.com</email>
-	      <uri>http://self-issued.info/</uri>
-	    </address>
-	  </author>
-
-	  <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
-	    <organization abbrev="NRI">Nomura Research Institute, Ltd.</organization>
-	    <address>
-	      <email>n-sakimura@nri.co.jp</email>
-	      <uri>http://nat.sakimura.org/</uri>
-	    </address>
-	  </author>
-
-	  <author fullname="John Bradley" initials="J." surname="Bradley">
-	    <organization abbrev="Ping Identity">Ping Identity</organization>
-	    <address>
-	      <email>ve7jtb@ve7jtb.com</email>
-	      <uri>http://www.thread-safe.com/</uri>
-	    </address>
-	  </author>
-
-	  <date day="3" month="August" year="2016" />
-        </front>
-	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-04"/>
-      </reference>
 
       <reference anchor="OpenID.Core" target="http://openid.net/specs/openid-connect-core-1_0.html">
         <front>
@@ -929,11 +929,11 @@
     </t>
     <t>
       The <xref target="Metadata">Metadata</xref> and
-      <xref target="Phasing"> what can and cannot be reliably inferred from it</xref>
+      <xref target="Phasing">what can and cannot be reliably inferred from it</xref>
       need additional evaluation and work.
       <xref target="OAuth.ResourceMetadata">OAuth 2.0 Protected Resource Metadata</xref>
-      is no longer a going concern but is currently referenced herein.
-      Boolean values do not adequately convey TB support as different components may support
+      is no longer a going concern, but is currently referenced herein.
+      Boolean values do not adequately convey Token Binding support, as different components may support
       different key parameters types.
       And successful negotiation likely doesn't provide the application layer info about
       all the supported key parameters types but rather just the one that was negotiated.
@@ -946,13 +946,16 @@
       <t>[[ to be removed by the RFC Editor before publication as an RFC ]]</t>
 
       <t>
-  -02
-    <list style="symbols">
-      <t>Added a section on Token Binding for authorization codes with one variation for native clients and one for web server clients.</t>
-      <t>Update language to reflect that the binding is to the token binding key pair and that proof of possession of that key is done on the TLS connection.</t>
-      <t>Added a few Open Issues so so they are tracked in the document.</t>
-      <t>Update Token Binding references.</t>
-    </list>
+	-02
+	<list style="symbols">
+	  <t>Added a section on Token Binding for authorization codes with one variation for native clients and one for web server clients.</t>
+	  <t>Updated language to reflect that the binding is to the token binding key pair and that proof-of-possession of that key is done on the TLS connection.</t>
+	  <t>Added a few Open Issues so they are tracked in the document.</t>
+	  <t>Updated Token Binding references.</t>
+	</list>
+      </t>
+
+      <t>
 	-01
         <list style="symbols">
 	  <t>
