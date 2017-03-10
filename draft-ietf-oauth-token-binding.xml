@@ -144,7 +144,118 @@
 	such as grant type information.
 	These choices make no difference to the client, since the refresh token is opaque to it.
       </t>
+
+    <section anchor="RefreshTokenBindingEx" title="Token Binding for Refresh Tokens Example">
+    <t>
+      This section provides an example of what the interactions around a
+      Token Bound refresh token might look like along with some details of
+      the involved processing.  Extra line breaks in all examples are for
+      display purposes only.
+    </t>
+
+    <t>
+      A client makes the following access token request with an
+      authorization code using a TLS connection where Token
+      Binding has been negotiated. Note that the exported keying material (EKM)
+      from that TLS connection is, base64url encoded,
+      <spanx style="verb">p6ZuSwfl6pIe8es5KyeV76T4swZmQp0_awd27jHfrbo</spanx>, which is
+      needed to validate the Token Binding Message.
+    </t>
+
+      <figure title="Initial Request with Code" anchor="RTEX1">
+        <artwork><![CDATA[
+ POST /as/token.oauth2 HTTP/1.1
+ Host: server.example.com
+ Content-Type: application/x-www-form-urlencoded
+ Sec-Token-Binding: AIkAAgBBQGto7hHRR0Y5nkOWqc9KNfwW95dEFmSI_tCZ_Cbl
+   7LWlt6Xjp3DbjiDJavGFiKP2HV_2JSE42VzmKOVVV8m7eqAAQOKiDK1Oi0z6v4X5B
+   P7uc0pFestVZ42TTOdJmoHpji06Qq3jsCiCRSJx9ck2fWJYx8tLVXRZPATB3x6c24
+   aY0ZEAAA
+
+ grant_type=authorization_code&code=4bwcZesc7Xacc330ltc66Wxk8EAfP9j2
+   &redirect_uri=com.example.client%3A%2Foauth2%2Fcb
+   &code_verifier=2x6_ylS390-8V7jaT9wj.8qP9nKmYCf.V-rD9O4r_1
+   &client_id=com.example.client
+
+]]></artwork>
+      </figure>
+
+    <t>
+      A refresh token is issued in response to the prior request. Although it
+      looks like a typical response to the client, the authorization server
+      has bound the refresh token to the Provided Token Binding ID from the
+      encoded Token Binding message in the <spanx style="verb">Sec-Token-Binding</spanx>
+      header of the request. In this
+      hypothetical example that binding is done by saving the Token Binding
+      ID alongside other information about the refresh token in some server
+      side persistent storage. That Token Binding ID is (base64url encoded),
+      <spanx style="verb">AgBBQGto7hHRR0Y5nkOWqc9KNfwW95dEFmSI_tCZ_Cbl7LWlt6Xjp3DbjiDJavGFiKP2HV_2JSE42VzmKOVVV8m7eqA</spanx>.
+
+    </t>
+    <figure title="Successful Response" anchor="RTEX2">
+      <artwork><![CDATA[
+ HTTP/1.1 200 OK
+ Content-Type: application/json
+ Cache-Control: no-cache, no-store
+
+ {
+  "access_token":"EdRs7qMrLb167Z9fV2dcwoLTC",
+  "refresh_token":"ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4",
+  "token_type":"Bearer",
+  "expires_in":3600
+ }
+
+]]></artwork>
+    </figure>
+
+  <t>
+    When the access token expires, the client requests a new one with
+    a refresh request to the token endpoint. The request is made on a new
+    TLS connection so the EKM (encoded:
+    <spanx style="verb">va-84Ukw4Zqfd7uWOtFrAJda96WwgbdaPDX2knoOiAE</spanx>)
+    and signature in the Token Binding Message are different than in the
+    initial request.
+  </t>
+
+      <figure title="Refresh Request" anchor="RTEX3">
+        <artwork><![CDATA[
+ POST /as/token.oauth2 HTTP/1.1
+ Host: server.example.com
+ Content-Type: application/x-www-form-urlencoded
+ Sec-Token-Binding: AIkAAgBBQGto7hHRR0Y5nkOWqc9KNfwW95dEFmSI_tCZ_Cbl
+   7LWlt6Xjp3DbjiDJavGFiKP2HV_2JSE42VzmKOVVV8m7eqAAQCpGbaG_YRf27qOra
+   L0UT4fsKKjL6PukuOT00qzamoAXxOq7m_id7O3mLpnb_sM7kwSxLi7iNHzzDgCAkP
+   t3lHwAAA
+
+refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
+  &grant_type=refresh_token&client_id=com.example.client
+
+]]></artwork>
+      </figure>
+
+<t>
+  However, because the Token Binding ID is long-lived and spans multiple TLS
+  sessions and connections, it is the same as in the initial request. That
+  Token Binding ID is what the refresh token is bound to so the authorization
+  server is able to verify it and issue a new access token.
+</t>
+      <figure title="Successful Response" anchor="RTEX4">
+        <artwork><![CDATA[
+ HTTP/1.1 200 OK
+ Content-Type: application/json
+ Cache-Control: no-cache, no-store
+
+ {
+  "access_token":"bwcESCwC4yOCQ8iPsgcn117k7",
+  "token_type":"Bearer",
+  "expires_in":3600
+ }
+
+]]></artwork>
+      </figure>
     </section>
+    </section>
+
 
     <section anchor="AccessTokenBinding" title="Token Binding for Access Tokens">
       <t>
@@ -212,6 +323,82 @@
 	  might be communicated to the protected resource by other means,
 	  such as by introspecting <xref target="RFC7662"/> the access token.
 	</t>
+
+        <section anchor="AccessTokenFromAuthzEndpointEx"
+                 title="Example Access Token Issued from the Authorization Endpoint">
+  <t>
+    This section provides an example of what the interactions around a
+    Token Bound access token issued from the authorization endpoint might look
+    like along with some details of the involved processing.
+    Extra line breaks in all examples are for display purposes only.
+  </t>
+  <t>
+    The client directs the user-agent to make the following HTTP request to the
+    authorization endpoint. It is a typical authorization request that,
+    because Token Binding was negotiated on the underlying TLS connection and the
+    user-agent was signaled to reveal the Referred Token Binding, also includes
+    the <spanx style="verb">Sec-Token-Binding</spanx> header with a Token Binding Message
+    that contains both a Provided and Referred Token Binding.  The encoded EKM
+    from the TLS connection over which the request was made is
+    <spanx style="verb">jI5UAyjs5XCPISUGQIwgcSrOiVIWq4fhLVIFTQ4nLxc</spanx>.
+  </t>
+
+<figure title="Authorization Request" anchor="AuthzRequestEx">
+  <artwork><![CDATA[
+ GET /as/authorization.oauth2?response_type=token
+   &client_id=example.client&state=rM8pZxG1c3gKy6rEbsD8s
+   &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb HTTP/1.1
+ Host: server.example.com
+ Sec-Token-Binding: ARIAAgBBQIEE8mSMtDy2dj9EEBdXaQT9W3Rq1NS-jW8ebPoF
+   6FyL0jIfATVE55zlircgOTZmEg1xeIrC3DsGegwjs4bhw14AQGKDlAXFFMyQkZegC
+   wlbTlqX3F9HTt-lJxFU_pi16ezka7qVRCpSF0BQLfSqlsxMbYfSSCJX1BDtrIL7PX
+   j__fUAAAECAEFA1BNUnP3te5WrwlEwiejEz0OpesmC5PElWc7kZ5nlLSqQTj1ciIp
+   5vQ30LLUCyM_a2BYTUPKtd5EdS-PalT4t6ABADgeizRa5NkTMuX4zOdC-R4cLNWVV
+   O8lLu2Psko-UJLR_XAH4Q0H7-m0_nQR1zBN78nYMKPvHsz8L3zWKRVyXEgAA
+
+]]></artwork>
+</figure>
+
+    <t>
+      The authorization
+      server issues an access token and delivers it to the client
+      by redirecting the user-agent with the following HTTP response:
+    </t>
+
+<figure title="Authorization Request" anchor="AuthzRespEx">
+  <artwork><![CDATA[
+ HTTP/1.1 302 Found
+ Location: https://client.example.org/cb#state=rM8pZxG1c3gKy6rEbsD8s
+   &expires_in=3600&token_type=Bearer
+   &access_token=eyJhbGciOiJFUzI[...omitted for brevity...]8xy5W5sQ
+
+]]></artwork>
+</figure>
+
+
+    <t>
+      The access token is bound to the Referred Token Binding ID from
+      the authorization request, which when
+      represented as a JWT as described in <xref target="Representation"/>,
+      contains a SHA-256 hash of the
+      Token Binding ID as the value of the "tbh" (token binding hash)
+      member of the "cnf" (confirmation) claim. The confirmation claim
+      portion of the JWT Claims Set is shown in the following figure.
+    </t>
+
+<figure title="Confirmation Claim" anchor="ATFromAuthzEndpoint">
+  <artwork><![CDATA[
+ {
+   ...other claims omitted for brevity...
+   "cnf":{
+      "tbh": "vowQESa_MgbGJwIXaFm_BTN2QDPwh8PhuBm-EtUAqxc"
+   }
+ }
+
+]]></artwork>
+</figure>
+
+        </section>
       </section>
 
       <section anchor="AccessTokenFromTokenEndpoint"
@@ -233,6 +420,90 @@
 	  or communicates it to the protected resource by other means,
 	  just as in the previous case.
 	</t>
+
+        <section anchor="AccessTokenFromTokenEndpointEx"
+                 title="Example Access Token Issued from the Token Endpoint">
+
+    <t>
+      This section provides an example of what the interactions around a
+      Token Bound access token issued from the token endpoint might look
+      like along with some details of the involved processing.
+      Extra line breaks in all examples are for display purposes only.
+    </t>
+    <t>
+      The client makes an access token request to the token endpoint
+      and includes the <spanx style="verb">Sec-Token-Binding</spanx> header
+      with a Token Binding Message
+      that contains both a Provided and Referred Token Binding.
+      The encoded EKM
+      from the TLS connection over which the access token request was made is
+      <spanx style="verb">4jTc5e1QpocqPTZ5l6jsb6pRP18IFKdwwPvasYjn1-E</spanx>.
+    </t>
+
+          <figure title="Access Token Request" anchor="TokenEndpointRequestEx">
+            <artwork><![CDATA[
+ POST /as/token.oauth2 HTTP/1.1
+ Host: server.example.com
+ Content-Type: application/x-www-form-urlencoded
+ Sec-Token-Binding: ARIAAgBBQJFXJir2w4gbJ7grBx9uTYWIrs9V50-PW4ZijegQ
+   0LUM-_bGnGT6DizxUK-m5n3dQUIkeH7ybn6wb1C5dGyV_IAAQDDFToFrHt41Zppq7
+   u_SEMF_E-KimAB-HewWl2MvZzAQ9QKoWiJCLFiCkjgtr1RrA2-jaJvoB8o51DTGXQ
+   ydWYkAAAECAEFAuC1GlYU83rqTGHEau1oqvNwy0fDsdXzIyT_4x1FcldsMxjFkJac
+   IBJFGuYcccvnCak_duFi3QKFENuwxql-H9ABAMcU7IjJOUA4IyE6YoEcfz9BMPQqw
+   M5M6hw4RZNQd58fsTCCslQE_NmNCl9JXy4NkdkEZBxqvZGPr0y8QZ_bmAwAA
+
+ refresh_token=gZR_ZI8EAhLgWR-gWxBimbgZRZi_8EAhLgWRgWxBimbf
+  &grant_type=refresh_token&client_id=example.client
+
+]]></artwork>
+          </figure>
+
+    <t>
+      The authorization
+      server issues an access token bound to the
+      Referred Token Binding ID and delivers it in a response the client.
+    </t>
+
+          <figure title="Authorization Request" anchor="TokenEndpointRespEx">
+            <artwork><![CDATA[
+ HTTP/1.1 200 OK
+ Content-Type: application/json
+ Cache-Control: no-cache, no-store
+
+ {
+  "access_token":"eyJhbGciOiJFUzI1NiIsImtp[...omitted...]1cs29j5c3",
+  "token_type":"Bearer",
+  "expires_in":3600
+ }
+
+]]></artwork>
+          </figure>
+
+
+  <t>
+    The access token is bound to the Referred Token Binding ID of the
+    access token request, which when
+    represented as a JWT as described in <xref target="Representation"/>,
+    contains a SHA-256 hash of the
+    Token Binding ID as the value of the "tbh" (token binding hash)
+    member of the "cnf" (confirmation) claim. The confirmation claim portion
+    of the JWT Claims Set of the access token is shown in the following figure.
+  </t>
+
+          <figure title="Confirmation Claim" anchor="ATFromTokenEndpoint">
+            <artwork><![CDATA[
+ {
+   ...other claims omitted for brevity...
+   "cnf":{
+      "tbh": "7NRBu9iDdJlYCTOqyeYuLxXv0blEA-yTpmGIrAwKAws"
+   }
+ }
+
+]]></artwork>
+          </figure>
+
+        </section>
+
       </section>
 
       <section anchor="Resource" title="Protected Resource Token Binding Validation">
@@ -243,6 +514,31 @@
 	  Alternatively, cryptographic hashes of these Token Binding ID values can be compared.
 	  If the values do not match, the resource access attempt MUST be rejected with an error.
 	</t>
+  <t>
+    For example, a protected resource request using the access token from
+    <xref target="AccessTokenFromTokenEndpointEx"/> would look something like the following.
+    The encoded EKM
+    from the TLS connection over which the request was made is
+    <spanx style="verb">7LsNP3BT1aHHdXdk6meEWjtSkiPVLb7YS6iHp-JXmuE</spanx>.
+    The protected resource validates the binding
+    by comparing the Provided Token Binding ID from the
+    <spanx style="verb">Sec-Token-Binding</spanx> header to the token binding hash
+    confirmation of the access token. Extra line breaks in the example are for
+    display purposes only.
+  </t>
+        <figure title="Protected Resource Request" anchor="ProtectedResourceRequestEc">
+          <artwork><![CDATA[
+ GET /api/stuff HTTP/1.1
+ Host: resource.example.org
+ Content-Type: application/x-www-form-urlencoded
+ Sec-Token-Binding: AIkAAgBBQLgtRpWFPN66kxhxGrtaKrzcMtHw7HV8yMk_-MdR
+   XJXbDMYxZCWnCASRRrmHHHL5wmpP3bhYt0ChRDbsMapfh_QAQN1He3Ftj4Wa_S_fz
+   ZVns4saLfj6aBoMSQW6rLs19IIvHze7LrGjKyCfPTKXjajebxp-TLPFZCc0JTqTY5
+   _0MBAAAA
+
+]]></artwork>
+        </figure>
+
       </section>
 
       <section anchor="Representation" title="Representing Token Binding in JWT Access Tokens">
@@ -265,18 +561,19 @@
 	  as the value of the <spanx style="verb">tbh</spanx> (token binding hash)
 	  element in the <spanx style="verb">cnf</spanx> (confirmation) claim:
 	</t>
-	<figure>
-	  <!-- TBD Generate an actual "tbh" value from an actual Token Binding ID -->
+	<figure title="JWT with Token Binding Hash Confirmation Claim" anchor="TBHJWT">
 	  <artwork><![CDATA[
   {
    "iss": "https://server.example.com",
-   "aud": "https://resource.example.com",
+   "aud": "https://resource.example.org",
+   "sub": "brian@.example.com"
    "iat": 1467324320,
    "exp": 1467324920,
    "cnf":{
-     "tbh": "n0jI3trBK6_Gp2qiLOf48ZEZTjpBnhm-QOyzJxhBeAk"
+     "tbh": "7NRBu9iDdJlYCTOqyeYuLxXv0blEA-yTpmGIrAwKAws"
     }
   }
+
 ]]></artwork>
 	</figure>
 
@@ -310,7 +607,7 @@
           <t>
             As defined in <xref target="RFC7636">Proof Key for Code Exchange</xref>,
             the client sends the code challenge as part of the OAuth 2.0
-            Authorization Request with the two additional parameters:
+            authorization request with the two additional parameters:
             <spanx style="verb">code_challenge</spanx> and <spanx style="verb">code_challenge_method</spanx>.
           </t>
           <t>
@@ -333,6 +630,25 @@
             with the authorization code so they can be verified later when the authorization code is
             presented in the access token request.
           </t>
+
+          <t>
+            For example, a native application client sends an authorization request by
+            sending the user's browser to the authorization endpoint. The resulting HTTP
+            request looks something like the following (with extra line breaks for display purposes only).
+          </t>
+
+          <figure title="Authorization Request" anchor="NativeCodeChallengeEx">
+            <artwork><![CDATA[
+ GET /as/authorization.oauth2?response_type=code
+   &client_id=example.client&state=oUC2jyYtzRCrMyWrVnGj
+   &redirect_uri=com.example.client%3A%2Foauth2%2Fcb
+   &code_challenge=rBlgOyMY4teiuJMDgOwkrpsAjPyI07D2WsEM-dnq6eE
+   &code_challenge_method=tb_s256 HTTP/1.1
+ Host: server.example.com
+
+]]></artwork>
+          </figure>
+
         </section>
 
         <section anchor="NativeCodeVerifier" title="Code Verifier">
@@ -356,6 +672,32 @@
             sent with the access token request, so the static value <spanx style="verb">provided_tb</spanx> is used to meet that
             requirement and indicate that the Provided Token Binding ID is used for the verification.
           </t>
+
+          <t>
+            An example access token request, correlating to the authorization request in the previous example,
+            to the token endpoint over a TLS connection where
+            Token Binding has been negotiated would look like the following (with extra line breaks for display purposes only).
+            The encoded EKM
+            from the TLS connection over which the request was made is
+            <spanx style="verb">pNVKtPuQFvylNYn000QowWrQKoeMkeX9H32hVuU71Bs</spanx>.
+          </t>
+
+          <figure title="Authorization Request" anchor="NativeCodeVerifierEx">
+<artwork><![CDATA[
+ POST /as/token.oauth2 HTTP/1.1
+ Host: server.example.com
+ Content-Type: application/x-www-form-urlencoded
+ Sec-Token-Binding: AIkAAgBBQEOO9GRFP-LM0hoWw6-2i318BsuuUum5AL8bt1sz
+   lr1EFfp5DMXMNW3O8WjcIXr2DKJnI4xnuGsE6GywQd9RbD0AQJDb3xyo9PBxj8M6Y
+   jLt-6OaxgDkyoBoTkyrnNbLc8tJQ0JtXomKzBbj5qPtHDduXc6xz_lzvNpxSPxi42
+   8m7wkAAA
+
+ grant_type=authorization_code&code=mJAReTWKX7zI3oHUNd4o3PeNqNqxKGp6
+   &redirect_uri=com.example.client%3A%2Foauth2%2Fcb
+   &code_verifier=provided_tb&client_id=com.example.client
+
+]]></artwork>
+          </figure>
         </section>
       </section>
 
@@ -408,6 +750,58 @@
             with the authorization code so they can be verified later when the authorization code is
             presented in the access token request.
           </t>
+
+
+          <t>
+            For example, the web server client sends the authorization request by
+            redirecting the browser to the authorization endpoint. That HTTP redirection
+            response looks like the following (with extra line breaks for display purposes only).
+          </t>
+
+          <figure title="Redirect the Browser" anchor="WebCodeChallenge302Ex">
+            <artwork><![CDATA[
+ HTTP/1.1 302 Found
+ Location: https://server.example.com?response_type=code
+   &client_id=org.example.client&state=P4FUFqYzs1ij3ffsYCP34d3
+   &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
+   &code_challenge=referred_tb&code_challenge_method=rtb
+ Include-Referred-Token-Binding-ID: true
+
+]]></artwork>
+          </figure>
+
+          <t>
+            The redirect includes the <spanx style="verb">Include-Referred-Token-Binding-ID</spanx>
+            response header field that signals to the user-agent that it
+            should reveal, to the authorization sever, the Token Binding ID used
+            on the connection to the web server client. The resulting HTTP request to the
+            authorization sever looks something like the following
+            (with extra line breaks for display purposes only). The encoded EKM
+            from the TLS connection over which the request was made is
+            <spanx style="verb">7gOdRzMhPeO-1YwZGmnVHyReN5vd2CxcsRBN69Ue4cI</spanx>.
+
+          </t>
+
+
+          <figure title="Authorization Request" anchor="WebCodeChallengeEx">
+            <artwork><![CDATA[
+ GET /as/authorization.oauth2?response_type=code
+   &client_id=org.example.client&state=dryo8YFpWacbUPjhBf4Nvt51
+   &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
+   &code_challenge=referred_tb&code_challenge_method=rtb HTTP/1.1
+ Host: server.example.com
+ Sec-Token-Binding: ARIAAgBBQB-XOPf5ePlf7ikATiAFEGOS503lPmRfkyymzdWw
+   HCxl0njjxC3D0E_OVfBNqrIQxzIfkF7tWby2ZfyaE6XpwTsAQBYqhFX78vMOgDX_F
+   d_b2dlHyHlMmkIz8iMVBY_reM98OUaJFz5IB7PG9nZ11j58LoG5QhmQoI9NXYktKZ
+   RXxrYAAAECAEFAdUFTnfQADkn1uDbQnvJEk6oQs38L92gv-KO-qlYadLoDIKe2h53
+   hSiKwIP98iRj_unedkNkAMyg9e2mY4Gp7WwBAeDUOwaSXNz1e6gKohwN4SAZ5eNyx
+   45Mh8VI4woL1BipLoqrJRoK6dxFkWgHRMuBROcLGUj5PiOoxybQH_Tom3gAA
+
+]]></artwork>
+          </figure>
+
+
+
         </section>
 
         <section anchor="WebCodeVerifier" title="Code Verifier">
@@ -431,6 +825,50 @@
             as normal (as defined by <xref target="RFC6749">OAuth 2.0</xref>).  If the values do not
             match, an error response indicating "invalid_grant" MUST be returned.
           </t>
+
+          <t>
+            Continuing the example from the previous section, the authorization server
+            sends the code to the web server client by redirecting the browser to
+            the client's <spanx style="verb">redirect_uri</spanx>, which results in the browser
+            making a request like the following (with extra line breaks for display purposes only)
+            to the web server client over a TLS channel where Token Binding has been established.
+            The encoded EKM
+            from the TLS connection over which the request was made is
+            <spanx style="verb">EzW60vyINbsb_tajt8ij3tV6cwy2KH-i8BdEMYXcNn0</spanx>.
+          </t>
+          <figure title="Authorization Response to Web Server Client" anchor="WebCodeVerifierRespEx">
+<artwork><![CDATA[
+ GET /cb?state=dryo8YFpWacbUPjhBf4Nvt51&code=jwD3oOa5cQvvLc81bwc4CMw
+ Host: client.example.org
+ Sec-Token-Binding: AIkAAgBBQHVBU530AA5J9bg20J7yRJOqELN_C_doL_ijvqpW
+   GnS6AyCntoed4UoisCD_fIkY_7p3nZDZADMoPXtpmOBqe1sAQEwgC9Zpg7QFCDBib
+   6GlZki3MhH32KNfLefLJc1vR1xE8l7OMfPLZHP2Woxh6rEtmgBcAABubEbTz7muNl
+   Ln8uoAAA
+]]></artwork>
+          </figure>
+
+          <t>
+            The web server client takes the Provided Token Binding ID from the
+            above request from the browser and sends it, base64url encoded, to the
+            authorization server in the <spanx style="verb">code_verifier</spanx>
+            parameter of the authorization code grant type request.
+            Extra line breaks in the example request are for display purposes only.
+          </t>
+          <figure title="Exchange Authorization Code" anchor="WebCodeVerifierTokenReqEx">
+<artwork><![CDATA[
+ POST /as/token.oauth2 HTTP/1.1
+ Host: server.example.com
+ Content-Type: application/x-www-form-urlencoded
+ Authorization: Basic b3JnLmV4YW1wbGUuY2xpZW50OmlldGY5OGNoaWNhZ28=
+
+ grant_type=authorization_code&code=jwD3oOa5cQvvLc81bwc4CMw
+   &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
+   &client_id=com.example.client
+   &code_verifier=AgBBQHVBU530AA5J9bg20J7yRJOqELN_C_doL_ijv
+   qpWGnS6AyCntoed4UoisCD_fIkY_7p3nZDZADMoPXtpmOBqe1s
+]]></artwork>
+          </figure>
+
         </section>
       </section>
 
@@ -950,7 +1388,8 @@
 	<list style="symbols">
 	  <t>Added a section on Token Binding for authorization codes with one variation for native clients and one for web server clients.</t>
 	  <t>Updated language to reflect that the binding is to the token binding key pair and that proof-of-possession of that key is done on the TLS connection.</t>
-	  <t>Added a few Open Issues so they are tracked in the document.</t>
+	  <t>Added a bunch of examples.</t>
+    <t>Added a few Open Issues so they are tracked in the document.</t>
 	  <t>Updated Token Binding references.</t>
 	</list>
       </t>
