@@ -583,9 +583,17 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
     <section anchor="AuthzCodeTokenBinding" title="Token Binding for Authorization Codes">
     <t>
-      There are two variations for Token Binding the authorization code.
+      There are two variations for Token Binding of an authorization code.
       One is appropriate for native application clients and the other for web server clients.
-      Both utilize the extensible framework of
+      The nature of where the various components reside for the different client types
+      demands different methods of Token Binding the code so that it is bound to a Token Binding
+      key on the end user's device. This ensures that a lost or stolen code cannot be successfully
+      utilized from a different device.
+      For native application clients the code is bound to a Token Binding key pair
+      that the native client itself possesses.
+      For web server clients the code is bound to a Token Binding key pair on the end user's
+      browser.
+      Both variations utilize the extensible framework of
       <xref target="RFC7636">Proof Key for Code Exchange (PKCE)</xref>, which enables the
       client to show possession of a certain key when exchanging the authorization code for tokens.
       The following subsections individually describe each of the two PKCE methods respectively.
