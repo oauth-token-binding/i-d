@@ -138,7 +138,8 @@
 	is an implementation detail that beyond the scope of this specification.
 	Some authorization servers will choose to store the Token Binding ID
 	(or a cryptographic hash of it, such a SHA-256 hash <xref target="SHS"/>)
-	in the refresh token itself, thus reducing the amount of state to be kept by the server.
+  in the refresh token itself, provided it is integrity-protected,
+  thus reducing the amount of state to be kept by the server.
 	Other authorization servers will add the Token Binding ID value (or a hash of it)
 	to an internal data structure also containing other information about the refresh token,
 	such as grant type information.
