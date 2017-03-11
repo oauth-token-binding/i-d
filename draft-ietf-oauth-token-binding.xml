@@ -145,10 +145,10 @@
 	These choices make no difference to the client, since the refresh token is opaque to it.
       </t>
 
-    <section anchor="RefreshTokenBindingEx" title="Token Binding for Refresh Tokens Example">
+    <section anchor="RefreshTokenBindingEx" title="Example Token Binding for Refresh Tokens">
     <t>
       This section provides an example of what the interactions around a
-      Token Bound refresh token might look like along with some details of
+      Token Bound refresh token might look like, along with some details of
       the involved processing.  Extra line breaks in all examples are for
       display purposes only.
     </t>
@@ -156,8 +156,8 @@
     <t>
       A client makes the following access token request with an
       authorization code using a TLS connection where Token
-      Binding has been negotiated. Note that the exported keying material (EKM)
-      from that TLS connection is, base64url encoded,
+      Binding has been negotiated. The base64url-encoded representation of
+      the exported keying material (EKM) from that TLS connection is
       <spanx style="verb">p6ZuSwfl6pIe8es5KyeV76T4swZmQp0_awd27jHfrbo</spanx>, which is
       needed to validate the Token Binding Message.
     </t>
@@ -185,10 +185,11 @@
       looks like a typical response to the client, the authorization server
       has bound the refresh token to the Provided Token Binding ID from the
       encoded Token Binding message in the <spanx style="verb">Sec-Token-Binding</spanx>
-      header of the request. In this
-      hypothetical example that binding is done by saving the Token Binding
+      header of the request. In this example,
+      that binding is done by saving the Token Binding
       ID alongside other information about the refresh token in some server
-      side persistent storage. That Token Binding ID is (base64url encoded),
+      side persistent storage.
+      The base64url-encoded representation of that Token Binding ID is
       <spanx style="verb">AgBBQGto7hHRR0Y5nkOWqc9KNfwW95dEFmSI_tCZ_Cbl7LWlt6Xjp3DbjiDJavGFiKP2HV_2JSE42VzmKOVVV8m7eqA</spanx>.
 
     </t>
@@ -211,7 +212,7 @@
   <t>
     When the access token expires, the client requests a new one with
     a refresh request to the token endpoint. The request is made on a new
-    TLS connection so the EKM (encoded:
+    TLS connection so the EKM (base64url-encoded:
     <spanx style="verb">va-84Ukw4Zqfd7uWOtFrAJda96WwgbdaPDX2knoOiAE</spanx>)
     and signature in the Token Binding Message are different than in the
     initial request.
@@ -234,9 +235,9 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       </figure>
 
 <t>
-  However, because the Token Binding ID is long-lived and spans multiple TLS
+  However, because the Token Binding ID is long-lived and may span multiple TLS
   sessions and connections, it is the same as in the initial request. That
-  Token Binding ID is what the refresh token is bound to so the authorization
+  Token Binding ID is what the refresh token is bound to, so the authorization
   server is able to verify it and issue a new access token.
 </t>
       <figure title="Successful Response" anchor="RTEX4">
@@ -329,7 +330,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
   <t>
     This section provides an example of what the interactions around a
     Token Bound access token issued from the authorization endpoint might look
-    like along with some details of the involved processing.
+    like, along with some details of the involved processing.
     Extra line breaks in all examples are for display purposes only.
   </t>
   <t>
@@ -338,7 +339,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
     because Token Binding was negotiated on the underlying TLS connection and the
     user-agent was signaled to reveal the Referred Token Binding, also includes
     the <spanx style="verb">Sec-Token-Binding</spanx> header with a Token Binding Message
-    that contains both a Provided and Referred Token Binding.  The encoded EKM
+    that contains both a Provided and Referred Token Binding.  The base64url-encoded EKM
     from the TLS connection over which the request was made is
     <spanx style="verb">jI5UAyjs5XCPISUGQIwgcSrOiVIWq4fhLVIFTQ4nLxc</spanx>.
   </t>
@@ -379,10 +380,10 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
     <t>
       The access token is bound to the Referred Token Binding ID from
       the authorization request, which when
-      represented as a JWT as described in <xref target="Representation"/>,
-      contains a SHA-256 hash of the
-      Token Binding ID as the value of the "tbh" (token binding hash)
-      member of the "cnf" (confirmation) claim. The confirmation claim
+      represented as a JWT, as described in <xref target="Representation"/>,
+      contains the SHA-256 hash of the
+      Token Binding ID as the value of the <spanx style="verb">tbh</spanx> (token binding hash)
+      member of the <spanx style="verb">cnf</spanx> (confirmation) claim. The confirmation claim
       portion of the JWT Claims Set is shown in the following figure.
     </t>
 
@@ -427,7 +428,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
     <t>
       This section provides an example of what the interactions around a
       Token Bound access token issued from the token endpoint might look
-      like along with some details of the involved processing.
+      like, along with some details of the involved processing.
       Extra line breaks in all examples are for display purposes only.
     </t>
     <t>
@@ -435,7 +436,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       and includes the <spanx style="verb">Sec-Token-Binding</spanx> header
       with a Token Binding Message
       that contains both a Provided and Referred Token Binding.
-      The encoded EKM
+      The base64url-encoded EKM
       from the TLS connection over which the access token request was made is
       <spanx style="verb">4jTc5e1QpocqPTZ5l6jsb6pRP18IFKdwwPvasYjn1-E</spanx>.
     </t>
@@ -483,10 +484,10 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
   <t>
     The access token is bound to the Referred Token Binding ID of the
     access token request, which when
-    represented as a JWT as described in <xref target="Representation"/>,
-    contains a SHA-256 hash of the
-    Token Binding ID as the value of the "tbh" (token binding hash)
-    member of the "cnf" (confirmation) claim. The confirmation claim portion
+    represented as a JWT, as described in <xref target="Representation"/>,
+    contains the SHA-256 hash of the
+    Token Binding ID as the value of the <spanx style="verb">tbh</spanx> (token binding hash)
+    member of the <spanx style="verb">cnf</spanx> (confirmation) claim. The confirmation claim portion
     of the JWT Claims Set of the access token is shown in the following figure.
   </t>
 
@@ -514,10 +515,11 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 	  Alternatively, cryptographic hashes of these Token Binding ID values can be compared.
 	  If the values do not match, the resource access attempt MUST be rejected with an error.
 	</t>
+	<section anchor="ResourceExample" title="Example Protected Resource Request">
   <t>
     For example, a protected resource request using the access token from
     <xref target="AccessTokenFromTokenEndpointEx"/> would look something like the following.
-    The encoded EKM
+    The base64url-encoded EKM
     from the TLS connection over which the request was made is
     <spanx style="verb">7LsNP3BT1aHHdXdk6meEWjtSkiPVLb7YS6iHp-JXmuE</spanx>.
     The protected resource validates the binding
@@ -538,6 +540,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
 ]]></artwork>
         </figure>
+	</section>
 
       </section>
 
@@ -566,7 +569,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
   {
    "iss": "https://server.example.com",
    "aud": "https://resource.example.org",
-   "sub": "brian@.example.com"
+   "sub": "brian@example.com"
    "iat": 1467324320,
    "exp": 1467324920,
    "cnf":{
@@ -631,6 +634,8 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             presented in the access token request.
           </t>
 
+	  <section anchor="NativeCodeChallengeExample" title="Example Code Challenge">
+
           <t>
             For example, a native application client sends an authorization request by
             sending the user's browser to the authorization endpoint. The resulting HTTP
@@ -648,6 +653,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
 ]]></artwork>
           </figure>
+	  </section>
 
         </section>
 
@@ -673,11 +679,12 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             requirement and indicate that the Provided Token Binding ID is used for the verification.
           </t>
 
+	  <section anchor="NativeCodeVerifierExample" title="Example Code Verifier">
           <t>
             An example access token request, correlating to the authorization request in the previous example,
-            to the token endpoint over a TLS connection where
+            to the token endpoint over a TLS connection for which
             Token Binding has been negotiated would look like the following (with extra line breaks for display purposes only).
-            The encoded EKM
+            The base64url-encoded EKM
             from the TLS connection over which the request was made is
             <spanx style="verb">pNVKtPuQFvylNYn000QowWrQKoeMkeX9H32hVuU71Bs</spanx>.
           </t>
@@ -698,6 +705,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
 ]]></artwork>
           </figure>
+	  </section>
         </section>
       </section>
 
@@ -751,7 +759,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             presented in the access token request.
           </t>
 
-
+	  <section anchor="WebCodeChallengeExample" title="Example Code Challenge">
           <t>
             For example, the web server client sends the authorization request by
             redirecting the browser to the authorization endpoint. That HTTP redirection
@@ -776,7 +784,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             should reveal, to the authorization sever, the Token Binding ID used
             on the connection to the web server client. The resulting HTTP request to the
             authorization sever looks something like the following
-            (with extra line breaks for display purposes only). The encoded EKM
+            (with extra line breaks for display purposes only). The base64url-encoded EKM
             from the TLS connection over which the request was made is
             <spanx style="verb">7gOdRzMhPeO-1YwZGmnVHyReN5vd2CxcsRBN69Ue4cI</spanx>.
 
@@ -799,7 +807,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
 ]]></artwork>
           </figure>
-
+	  </section>
 
 
         </section>
@@ -810,7 +818,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             The web server client receives the authorization code from the browser and
             extracts the Provided Token Binding ID from the
             <spanx style="verb">Sec-Token-Binding</spanx> header of the request.
-            The client sends the base64url encoded
+            The client sends the base64url-encoded
             (per Section 5 of <xref target="RFC4648"/> with all trailing padding ('=')
             characters omitted and without the inclusion of any line breaks or whitespace)
             Provided Token Binding ID as the value of the
@@ -826,13 +834,14 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             match, an error response indicating "invalid_grant" MUST be returned.
           </t>
 
+	  <section anchor="WebCodeVerifierExample" title="Example Code Verifier">
           <t>
             Continuing the example from the previous section, the authorization server
             sends the code to the web server client by redirecting the browser to
             the client's <spanx style="verb">redirect_uri</spanx>, which results in the browser
             making a request like the following (with extra line breaks for display purposes only)
-            to the web server client over a TLS channel where Token Binding has been established.
-            The encoded EKM
+            to the web server client over a TLS channel for which Token Binding has been established.
+            The base64url-encoded EKM
             from the TLS connection over which the request was made is
             <spanx style="verb">EzW60vyINbsb_tajt8ij3tV6cwy2KH-i8BdEMYXcNn0</spanx>.
           </t>
@@ -868,6 +877,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
    qpWGnS6AyCntoed4UoisCD_fIkY_7p3nZDZADMoPXtpmOBqe1s
 ]]></artwork>
           </figure>
+	  </section>
 
         </section>
       </section>
