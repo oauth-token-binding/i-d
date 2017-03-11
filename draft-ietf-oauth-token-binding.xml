@@ -150,14 +150,20 @@
     <t>
       This section provides an example of what the interactions around a
       Token Bound refresh token might look like, along with some details of
-      the involved processing.  Extra line breaks in all examples are for
+      the involved processing. Token Binding of refresh tokens is most useful
+      for native application clients so the example has protocol elements typical
+      of a native client flow.
+      Extra line breaks in all examples are for
       display purposes only.
     </t>
 
     <t>
-      A client makes the following access token request with an
+      A native application client makes the following access token request with an
       authorization code using a TLS connection where Token
-      Binding has been negotiated. The base64url-encoded representation of
+      Binding has been negotiated. A PKCE <spanx style="verb">code_verifier</spanx> is
+      included because use the of PKCE is considered best practice for native
+      application clients <xref target="I-D.ietf-oauth-native-apps"/>.
+      The base64url-encoded representation of
       the exported keying material (EKM) from that TLS connection is
       <spanx style="verb">p6ZuSwfl6pIe8es5KyeV76T4swZmQp0_awd27jHfrbo</spanx>, which is
       needed to validate the Token Binding Message.
@@ -174,9 +180,8 @@
    aY0ZEAAA
 
  grant_type=authorization_code&code=4bwcZesc7Xacc330ltc66Wxk8EAfP9j2
-   &redirect_uri=com.example.client%3A%2Foauth2%2Fcb
    &code_verifier=2x6_ylS390-8V7jaT9wj.8qP9nKmYCf.V-rD9O4r_1
-   &client_id=com.example.client
+   &client_id=example-native-client-id
 
 ]]></artwork>
       </figure>
@@ -230,7 +235,7 @@
    t3lHwAAA
 
 refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
-  &grant_type=refresh_token&client_id=com.example.client
+  &grant_type=refresh_token&client_id=example-native-client-id
 
 ]]></artwork>
       </figure>
@@ -348,7 +353,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 <figure title="Authorization Request" anchor="AuthzRequestEx">
   <artwork><![CDATA[
  GET /as/authorization.oauth2?response_type=token
-   &client_id=example.client&state=rM8pZxG1c3gKy6rEbsD8s
+   &client_id=example-client-id&state=rM8pZxG1c3gKy6rEbsD8s
    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb HTTP/1.1
  Host: server.example.com
  Sec-Token-Binding: ARIAAgBBQIEE8mSMtDy2dj9EEBdXaQT9W3Rq1NS-jW8ebPoF
@@ -455,7 +460,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
    M5M6hw4RZNQd58fsTCCslQE_NmNCl9JXy4NkdkEZBxqvZGPr0y8QZ_bmAwAA
 
  refresh_token=gZR_ZI8EAhLgWR-gWxBimbgZRZi_8EAhLgWRgWxBimbf
-  &grant_type=refresh_token&client_id=example.client
+  &grant_type=refresh_token&client_id=example-client-id
 
 ]]></artwork>
           </figure>
@@ -653,8 +658,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
           <figure title="Authorization Request" anchor="NativeCodeChallengeEx">
             <artwork><![CDATA[
  GET /as/authorization.oauth2?response_type=code
-   &client_id=example.client&state=oUC2jyYtzRCrMyWrVnGj
-   &redirect_uri=com.example.client%3A%2Foauth2%2Fcb
+   &client_id=example-native-client-id&state=oUC2jyYtzRCrMyWrVnGj
    &code_challenge=rBlgOyMY4teiuJMDgOwkrpsAjPyI07D2WsEM-dnq6eE
    &code_challenge_method=tb_s256 HTTP/1.1
  Host: server.example.com
@@ -708,16 +712,13 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
    8m7wkAAA
 
  grant_type=authorization_code&code=mJAReTWKX7zI3oHUNd4o3PeNqNqxKGp6
-   &redirect_uri=com.example.client%3A%2Foauth2%2Fcb
-   &code_verifier=provided_tb&client_id=com.example.client
+   &code_verifier=provided_tb&client_id=example-native-client-id
 
 ]]></artwork>
           </figure>
 	  </section>
         </section>
       </section>
-
-
 
 
       <section anchor="WebServerClients" title="Web Server Clients">
@@ -778,7 +779,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             <artwork><![CDATA[
  HTTP/1.1 302 Found
  Location: https://server.example.com?response_type=code
-   &client_id=org.example.client&state=P4FUFqYzs1ij3ffsYCP34d3
+   &client_id=example-web-client-id&state=P4FUFqYzs1ij3ffsYCP34d3
    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
    &code_challenge=referred_tb&code_challenge_method=rtb
  Include-Referred-Token-Binding-ID: true
@@ -802,7 +803,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
           <figure title="Authorization Request" anchor="WebCodeChallengeEx">
             <artwork><![CDATA[
  GET /as/authorization.oauth2?response_type=code
-   &client_id=org.example.client&state=dryo8YFpWacbUPjhBf4Nvt51
+   &client_id=example-web-client-id&state=dryo8YFpWacbUPjhBf4Nvt51
    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
    &code_challenge=referred_tb&code_challenge_method=rtb HTTP/1.1
  Host: server.example.com
@@ -880,7 +881,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
  grant_type=authorization_code&code=jwD3oOa5cQvvLc81bwc4CMw
    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
-   &client_id=com.example.client
+   &client_id=example-web-client-id
    &code_verifier=AgBBQHVBU530AA5J9bg20J7yRJOqELN_C_doL_ijv
    qpWGnS6AyCntoed4UoisCD_fIkY_7p3nZDZADMoPXtpmOBqe1s
 ]]></artwork>
@@ -1326,6 +1327,8 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
     <references title="Informative References">
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7591"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7523"?>
+
+      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-native-apps-08.xml' ?>
 
       <reference anchor="OpenID.Core" target="http://openid.net/specs/openid-connect-core-1_0.html">
         <front>
