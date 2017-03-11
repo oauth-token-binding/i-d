@@ -217,7 +217,7 @@
 
   <t>
     When the access token expires, the client requests a new one with
-    a refresh request to the token endpoint. The request is made on a new
+    a refresh request to the token endpoint. In this example, the request is made on a new
     TLS connection so the EKM (base64url-encoded:
     <spanx style="verb">va-84Ukw4Zqfd7uWOtFrAJda96WwgbdaPDX2knoOiAE</spanx>)
     and signature in the Token Binding Message are different than in the
