@@ -1217,7 +1217,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
         </front>
       </reference>
 
-      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-05">
+      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-06">
         <front>
 	  <title>OAuth 2.0 Authorization Server Metadata</title>
 
@@ -1245,9 +1245,9 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 	    </address>
 	  </author>
 
-	  <date day="19" month="January" year="2017" />
+	  <date day="10" month="March" year="2017" />
         </front>
-	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-05"/>
+	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-06"/>
       </reference>
 
       <reference anchor="OAuth.ResourceMetadata" target="http://tools.ietf.org/html/draft-jones-oauth-resource-metadata-01">
