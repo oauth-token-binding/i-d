@@ -633,7 +633,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
       <section anchor="NativeAppClients" title="Native Application Clients">
         <t>
-          This section describes a (PKCE) method suitable for native application clients
+          This section describes a PKCE method suitable for native application clients
           that cryptographically binds the authorization code to a Token Binding key pair on the client,
           which the client proves possession of on the TLS connection during the access token request
           containing the authorization code.
@@ -744,7 +744,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
       <section anchor="WebServerClients" title="Web Server Clients">
         <t>
-          This section describes a (PKCE) method suitable for web server clients,
+          This section describes a PKCE method suitable for web server clients,
           which cryptographically binds the authorization code to a Token Binding
           key pair on the browser.
           The authorization code is bound to the Token Binding ID that the browser
