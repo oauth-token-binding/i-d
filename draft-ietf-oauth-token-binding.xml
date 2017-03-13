@@ -40,6 +40,21 @@
       </address>
     </author>
 
+   <author fullname="William Denniss" initials="W." surname="Denniss">
+      <organization>Google</organization>
+      <address>
+        <postal>
+          <street>1600 Amphitheatre Pkwy</street>
+          <city>Mountain View</city>
+          <region>CA</region>
+          <code>94043</code>
+          <country>USA</country>
+        </postal>
+        <email>wdenniss@google.com</email>
+        <uri>http://wdenniss.com/</uri>
+      </address>
+    </author>
+
     <date />
 
     <area>Security</area>
@@ -317,23 +332,26 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       <section anchor="AccessTokenFromAuthzEndpoint"
                title="Access Tokens Issued from the Authorization Endpoint">
 	<t>
-    For access tokens returned directly from the authorization endpoint,
-    such as with the implicit grant defined in Section 4.2 of
-    <xref target="RFC6749">OAuth 2.0</xref>, the Token Binding ID of
-    client's TLS channel to the protected resource is sent with the authorization
-    request as the Referred Token Binding ID in the
-    <spanx style="verb">Sec-Token-Binding</spanx> header, and is used to bind
-    the access token.
+	  For access tokens returned directly from the authorization endpoint,
+	  such as with the implicit grant defined in Section 4.2 of
+	  <xref target="RFC6749">OAuth 2.0</xref>, the Token Binding ID of
+	  the client's TLS channel to the protected resource is sent with
+	  the authorization request as the Referred Token Binding ID in the
+	  <spanx style="verb">Sec-Token-Binding</spanx> header.
+	  and is used to Token Bind the access token.
 	</t>
-  <t>
-    Upon receiving the Referred Token Binding ID
-    in an authorization request, the authorization server associates (binds) the
-    ID with the access token in a way that can be retrieved by the protected
-    resource. Such methods include embedding the Referred Token Binding ID (or a
-    cryptographic hash of it) in the issued access token itself, or through
-    token introspection <xref target="RFC7662"/>.  The exact method for
-    associating the referred token binding ID is negotiated between the authorization 
-    server and the protected resource, and is out of scope for this specification.
+	<t>
+	  Upon receiving the Referred Token Binding ID
+	  in an authorization request,
+	  the authorization server associates (Token Binds) the ID with the access token
+	  in a way that can be accessed by the protected resource.
+	  Such methods include embedding the Referred Token Binding ID
+	  (or a cryptographic hash of it) in the issued access token itself,
+	  possibly using the syntax described at <xref target="Representation"/>,
+	  or through token introspection <xref target="RFC7662"/>.
+	  The method for associating the referred token binding ID with the access token
+	  is determined by the authorization server and the protected resource,
+	  and is beyond the scope for this specification.
 	</t>
 
         <section anchor="AccessTokenFromAuthzEndpointEx"
@@ -416,28 +434,31 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       <section anchor="AccessTokenFromTokenEndpoint"
                title="Access Tokens Issued from the Token Endpoint">
 	<t>
-    For access tokens returned from the token endpoint,
-    the Token Binding ID of the client's TLS channel to the protected resource
-    is sent as the Referred Token Binding ID in the <spanx style="verb">Sec-Token-Binding</spanx> header.
-    and used to bind the access token.
-    This applies to all the conventional grant types from OAuth 2.0 <xref target="RFC6749"/>,
-    including but not limited to refresh and authorization code token requests,
-    as well as extension grants, such as JWT assertion authorization grants <xref target="RFC7523"/>.
+	  For access tokens returned from the token endpoint,
+	  the Token Binding ID of the client's TLS channel to the protected resource
+	  is sent as the Referred Token Binding ID in the <spanx style="verb">Sec-Token-Binding</spanx> header
+	  and used to Token Bind the access token.
+	  This applies to all the grant types from OAuth 2.0 <xref target="RFC6749"/> using the token endpoint,
+	  including, but not limited to the refresh and authorization code token requests,
+	  as well as some extension grants, such as JWT assertion authorization grants <xref target="RFC7523"/>.
 	</t>
 	<t>
-    Upon receiving the Referred Token Binding ID
-    the authorization server associates (binds) the
-    ID with the access token in a way that can be retrieved by the protected
-    resource. Such methods include embedding the Referred Token Binding ID (or a
-    cryptographic hash of it) in the issued access token itself, or through
-    token introspection <xref target="RFC7662"/>.  The exact method for
-    associating the referred token binding ID is negotiated between the authorization 
-    server and the protected resource, and is out of scope for this specification.
+	  Upon receiving the Referred Token Binding ID
+	  in a token request,
+	  the authorization server associates (Token Binds) the ID with the access token
+	  in a way that can be accessed by the protected resource.
+	  Such methods include embedding the Referred Token Binding ID
+	  (or a cryptographic hash of it) in the issued access token itself,
+	  possibly using the syntax described at <xref target="Representation"/>,
+	  or through token introspection <xref target="RFC7662"/>.
+	  The method for associating the referred token binding ID with the access token
+	  is determined by the authorization server and the protected resource,
+	  and is beyond the scope for this specification.
 	</t>
 	<t>
-    Note that if the request results in a new refresh token being generated,
-    it is bound using the Provided Token Binding ID, per
-    <xref target="RefreshTokenBinding"/>
+	  Note that if the request results in a new refresh token being generated,
+	  it can be Token bound using the Provided Token Binding ID,
+	  per <xref target="RefreshTokenBinding"/>.
 	</t>
 
         <section anchor="AccessTokenFromTokenEndpointEx"
@@ -453,16 +474,14 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       The client makes an access token request to the token endpoint
       and includes the <spanx style="verb">Sec-Token-Binding</spanx> header
       with a Token Binding Message
-      that contains both a Provided and Referred Token Binding ID. The Provided
-      Token Binding ID is used to validate the token binding of the refresh token
-      in the request (and to bind a new refresh token, if one is issued),
-      and the Referred Token Binding ID is used to bind the access
-      token that is generated.
+      that contains both Provided and Referred Token Binding IDs.
+      The Provided Token Binding ID is used to validate the token binding of the refresh token
+      in the request (and to Token Bind a new refresh token, if one is issued),
+      and the Referred Token Binding ID is used to Token Bind the access token that is generated.
       The base64url-encoded EKM
       from the TLS connection over which the access token request was made is
       <spanx style="verb">4jTc5e1QpocqPTZ5l6jsb6pRP18IFKdwwPvasYjn1-E</spanx>.
     </t>
-
           <figure title="Access Token Request" anchor="TokenEndpointRequestEx">
             <artwork><![CDATA[
  POST /as/token.oauth2 HTTP/1.1
@@ -643,7 +662,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             <spanx style="verb">code_challenge</spanx> and <spanx style="verb">code_challenge_method</spanx>.
           </t>
           <t>
-            For this Token Binding method of PKCE, <spanx style='verb'>tb_s256</spanx>
+            For this Token Binding method of PKCE, <spanx style='verb'>TB-S256</spanx>
             is used as the value of the <spanx style="verb">code_challenge_method</spanx> parameter.
           </t>
           <t>
@@ -676,7 +695,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
  GET /as/authorization.oauth2?response_type=code
    &client_id=example-native-client-id&state=oUC2jyYtzRCrMyWrVnGj
    &code_challenge=rBlgOyMY4teiuJMDgOwkrpsAjPyI07D2WsEM-dnq6eE
-   &code_challenge_method=tb_s256 HTTP/1.1
+   &code_challenge_method=TB-S256 HTTP/1.1
  Host: server.example.com
 
 ]]></artwork>
@@ -767,7 +786,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             <xref target="I-D.ietf-tokbind-https">Section 5.3 of Token Binding over HTTP</xref>.
           </t>
           <t>
-            For this Token Binding method of PKCE, <spanx style='verb'>rtb</spanx>
+            For this Token Binding method of PKCE, <spanx style='verb'>referred_tb</spanx>
             is used for the value of the <spanx style="verb">code_challenge_method</spanx> parameter.
           </t>
           <t>
@@ -797,7 +816,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
  Location: https://server.example.com?response_type=code
    &client_id=example-web-client-id&state=P4FUFqYzs1ij3ffsYCP34d3
    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
-   &code_challenge=referred_tb&code_challenge_method=rtb
+   &code_challenge=referred_tb&code_challenge_method=referred_tb
  Include-Referred-Token-Binding-ID: true
 
 ]]></artwork>
@@ -821,7 +840,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
  GET /as/authorization.oauth2?response_type=code
    &client_id=example-web-client-id&state=dryo8YFpWacbUPjhBf4Nvt51
    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
-   &code_challenge=referred_tb&code_challenge_method=rtb HTTP/1.1
+   &code_challenge=referred_tb&code_challenge_method=referred_tb HTTP/1.1
  Host: server.example.com
  Sec-Token-Binding: ARIAAgBBQB-XOPf5ePlf7ikATiAFEGOS503lPmRfkyymzdWw
    HCxl0njjxC3D0E_OVfBNqrIQxzIfkF7tWby2ZfyaE6XpwTsAQBYqhFX78vMOgDX_F
@@ -1174,14 +1193,14 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
           <?rfc subcompact="yes"?>
           <t>
             <list style='symbols'>
-              <t>Code Challenge Method Parameter Name: tb_s256</t>
+              <t>Code Challenge Method Parameter Name: TB-S256</t>
               <t>Change controller: IESG</t>
               <t>Specification document(s): <xref target="NativeCodeChallenge"/> of [[ this specification ]]</t>
             </list>
           </t>
           <t>
             <list style='symbols'>
-              <t>Code Challenge Method Parameter Name: rtb</t>
+              <t>Code Challenge Method Parameter Name: referred_tb</t>
               <t>Change controller: IESG</t>
               <t>Specification document(s): <xref target="WebCodeChallenge"/> of [[ this specification ]]</t>
             </list>
@@ -1190,8 +1209,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
         </section>
       </section>
-
-
 
     </section>
   </middle>
@@ -1380,7 +1397,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       <t>
 	The authors would like to thank the following people for their contributions to the specification:
 	Dirk Balfanz,
-	William Denniss,
 	Andrei Popov,
 	and
 	Nat Sakimura.
@@ -1427,7 +1443,8 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 	  <t>Updated language to reflect that the binding is to the token binding key pair and that proof-of-possession of that key is done on the TLS connection.</t>
 	  <t>Added a bunch of examples.</t>
     <t>Added a few Open Issues so they are tracked in the document.</t>
-	  <t>Updated Token Binding references.</t>
+	  <t>Updated the Token Binding and OAuth Metadata references.</t>
+	  <t>Added William Denniss as an author.</t>
 	</list>
       </t>
 
