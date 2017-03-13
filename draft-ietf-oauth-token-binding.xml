@@ -825,7 +825,8 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
  GET /as/authorization.oauth2?response_type=code
    &client_id=example-web-client-id&state=dryo8YFpWacbUPjhBf4Nvt51
    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
-   &code_challenge=referred_tb&code_challenge_method=referred_tb HTTP/1.1
+   &code_challenge=referred_tb
+   &code_challenge_method=referred_tb HTTP/1.1
  Host: server.example.com
  Sec-Token-Binding: ARIAAgBBQB-XOPf5ePlf7ikATiAFEGOS503lPmRfkyymzdWw
    HCxl0njjxC3D0E_OVfBNqrIQxzIfkF7tWby2ZfyaE6XpwTsAQBYqhFX78vMOgDX_F
