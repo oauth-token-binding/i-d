@@ -333,7 +333,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 	  <xref target="RFC6749">OAuth 2.0</xref>, the Token Binding ID of
 	  the client's TLS channel to the protected resource is sent with
 	  the authorization request as the Referred Token Binding ID in the
-	  <spanx style="verb">Sec-Token-Binding</spanx> header.
+	  <spanx style="verb">Sec-Token-Binding</spanx> header,
 	  and is used to Token Bind the access token.
 	</t>
 	<t>
@@ -429,8 +429,8 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 	<t>
 	  For access tokens returned from the token endpoint,
 	  the Token Binding ID of the client's TLS channel to the protected resource
-	  is sent as the Referred Token Binding ID in the <spanx style="verb">Sec-Token-Binding</spanx> header
-	  and used to Token Bind the access token.
+	  is sent as the Referred Token Binding ID in the <spanx style="verb">Sec-Token-Binding</spanx> header,
+	  and is used to Token Bind the access token.
 	  This applies to all the grant types from OAuth 2.0 <xref target="RFC6749"/> using the token endpoint,
 	  including, but not limited to the refresh and authorization code token requests,
 	  as well as some extension grants, such as JWT assertion authorization grants <xref target="RFC7523"/>.
