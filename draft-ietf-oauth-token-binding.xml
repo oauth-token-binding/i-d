@@ -333,7 +333,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 	  <xref target="RFC6749">OAuth 2.0</xref>, the Token Binding ID of
 	  the client's TLS channel to the protected resource is sent with
 	  the authorization request as the Referred Token Binding ID in the
-	  <spanx style="verb">Sec-Token-Binding</spanx> header.
+	  <spanx style="verb">Sec-Token-Binding</spanx> header
 	  and is used to Token Bind the access token.
 	</t>
 	<t>
