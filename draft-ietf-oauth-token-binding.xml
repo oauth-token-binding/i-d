@@ -319,16 +319,21 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 	<t>
     For access tokens returned directly from the authorization endpoint,
     such as with the implicit grant defined in Section 4.2 of
-    OAuth 2.0<xref target="RFC6749"/>, the Referred Token Binding ID
-    used to bind the access token is sent with the authorization request.
-	  Upon receiving the Referred Token Binding ID
-	  in an authorization request,
-	  the authorization server then records it
-	  (or a cryptographic hash of it)
-	  in the issued access token.
-	  Alternatively, in some implementations, the resource's Token Binding ID information
-	  might be communicated to the protected resource by other means,
-	  such as by introspecting <xref target="RFC7662"/> the access token.
+    <xref target="RFC6749">OAuth 2.0</xref>, the Token Binding ID of
+    client's TLS channel to the protected resource is sent with the authorization
+    request as the Referred Token Binding ID in the
+    <spanx style="verb">Sec-Token-Binding</spanx> header, and is used to bind
+    the access token.
+	</t>
+  <t>
+    Upon receiving the Referred Token Binding ID
+    in an authorization request, the authorization server associates (binds) the
+    ID with the access token in a way that can be retrieved by the protected
+    resource. Such methods include embedding the Referred Token Binding ID (or a
+    cryptographic hash of it) in the issued access token itself, or through
+    token introspection <xref target="RFC7662"/>.  The exact method for
+    associating the referred token binding ID is negotiated between the authorization 
+    server and the protected resource, and is out of scope for this specification.
 	</t>
 
         <section anchor="AccessTokenFromAuthzEndpointEx"
@@ -412,20 +417,27 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
                title="Access Tokens Issued from the Token Endpoint">
 	<t>
     For access tokens returned from the token endpoint,
-    the Referred Token Binding ID used to bind the access token
-    is sent with the token request.
+    the Token Binding ID of the client's TLS channel to the protected resource
+    is sent as the Referred Token Binding ID in the <spanx style="verb">Sec-Token-Binding</spanx> header.
+    and used to bind the access token.
     This applies to all the conventional grant types from OAuth 2.0 <xref target="RFC6749"/>,
     including but not limited to refresh and authorization code token requests,
     as well as extension grants, such as JWT assertion authorization grants <xref target="RFC7523"/>.
-	  In this case, the Token Binding ID
-	  of the TLS connection between the client and the protected resource
-	  is sent to the authorization server at the token endpoint as the
-	  Referred Token Binding ID.
-	  The authorization server then records it
-	  (or a cryptographic hash of it)
-	  in the issued access token
-	  or communicates it to the protected resource by other means,
-	  just as in the previous case.
+	</t>
+	<t>
+    Upon receiving the Referred Token Binding ID
+    the authorization server associates (binds) the
+    ID with the access token in a way that can be retrieved by the protected
+    resource. Such methods include embedding the Referred Token Binding ID (or a
+    cryptographic hash of it) in the issued access token itself, or through
+    token introspection <xref target="RFC7662"/>.  The exact method for
+    associating the referred token binding ID is negotiated between the authorization 
+    server and the protected resource, and is out of scope for this specification.
+	</t>
+	<t>
+    Note that if the request results in a new refresh token being generated,
+    it is bound using the Provided Token Binding ID, per
+    <xref target="RefreshTokenBinding"/>
 	</t>
 
         <section anchor="AccessTokenFromTokenEndpointEx"
@@ -441,7 +453,11 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       The client makes an access token request to the token endpoint
       and includes the <spanx style="verb">Sec-Token-Binding</spanx> header
       with a Token Binding Message
-      that contains both a Provided and Referred Token Binding.
+      that contains both a Provided and Referred Token Binding ID. The Provided
+      Token Binding ID is used to validate the token binding of the refresh token
+      in the request (and to bind a new refresh token, if one is issued),
+      and the Referred Token Binding ID is used to bind the access
+      token that is generated.
       The base64url-encoded EKM
       from the TLS connection over which the access token request was made is
       <spanx style="verb">4jTc5e1QpocqPTZ5l6jsb6pRP18IFKdwwPvasYjn1-E</spanx>.
@@ -728,9 +744,9 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
           key pair on the browser.
           The authorization code is bound to the Token Binding ID that the browser
           uses to deliver the authorization code to a web server client, which is sent to the
-          authorization sever as the Referred Token Binding ID during the authorization request.
+          authorization server as the Referred Token Binding ID during the authorization request.
           The web server client
-          conveys the Token Binding ID to the authorization sever when making
+          conveys the Token Binding ID to the authorization server when making
           the access token request containing the authorization code.
           This binding ensures that the authorization code cannot successfully be played or replayed to the
           web server client from a different browser than the one that made the authorization request.
@@ -790,9 +806,9 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
           <t>
             The redirect includes the <spanx style="verb">Include-Referred-Token-Binding-ID</spanx>
             response header field that signals to the user-agent that it
-            should reveal, to the authorization sever, the Token Binding ID used
+            should reveal, to the authorization server, the Token Binding ID used
             on the connection to the web server client. The resulting HTTP request to the
-            authorization sever looks something like the following
+            authorization server looks something like the following
             (with extra line breaks for display purposes only). The base64url-encoded EKM
             from the TLS connection over which the request was made is
             <spanx style="verb">7gOdRzMhPeO-1YwZGmnVHyReN5vd2CxcsRBN69Ue4cI</spanx>.
