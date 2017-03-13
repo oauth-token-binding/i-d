@@ -182,7 +182,6 @@
  grant_type=authorization_code&code=4bwcZesc7Xacc330ltc66Wxk8EAfP9j2
    &code_verifier=2x6_ylS390-8V7jaT9wj.8qP9nKmYCf.V-rD9O4r_1
    &client_id=example-native-client-id
-
 ]]></artwork>
       </figure>
 
@@ -211,7 +210,6 @@
   "token_type":"Bearer",
   "expires_in":3600
  }
-
 ]]></artwork>
     </figure>
 
@@ -236,7 +234,6 @@
 
 refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
   &grant_type=refresh_token&client_id=example-native-client-id
-
 ]]></artwork>
       </figure>
 
@@ -257,7 +254,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
   "token_type":"Bearer",
   "expires_in":3600
  }
-
 ]]></artwork>
       </figure>
     </section>
@@ -367,7 +363,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
    j__fUAAAECAEFA1BNUnP3te5WrwlEwiejEz0OpesmC5PElWc7kZ5nlLSqQTj1ciIp
    5vQ30LLUCyM_a2BYTUPKtd5EdS-PalT4t6ABADgeizRa5NkTMuX4zOdC-R4cLNWVV
    O8lLu2Psko-UJLR_XAH4Q0H7-m0_nQR1zBN78nYMKPvHsz8L3zWKRVyXEgAA
-
 ]]></artwork>
 </figure>
 
@@ -383,7 +378,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
  Location: https://client.example.org/cb#state=rM8pZxG1c3gKy6rEbsD8s
    &expires_in=3600&token_type=Bearer
    &access_token=eyJhbGciOiJFUzI[...omitted for brevity...]8xy5W5sQ
-
 ]]></artwork>
 </figure>
 
@@ -406,7 +400,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       "tbh": "vowQESa_MgbGJwIXaFm_BTN2QDPwh8PhuBm-EtUAqxc"
    }
  }
-
 ]]></artwork>
 </figure>
 
@@ -477,7 +470,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
  refresh_token=gZR_ZI8EAhLgWR-gWxBimbgZRZi_8EAhLgWRgWxBimbf
   &grant_type=refresh_token&client_id=example-client-id
-
 ]]></artwork>
           </figure>
 
@@ -498,7 +490,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
   "token_type":"Bearer",
   "expires_in":3600
  }
-
 ]]></artwork>
           </figure>
 
@@ -521,7 +512,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       "tbh": "7NRBu9iDdJlYCTOqyeYuLxXv0blEA-yTpmGIrAwKAws"
    }
  }
-
 ]]></artwork>
           </figure>
 
@@ -559,7 +549,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
    XJXbDMYxZCWnCASRRrmHHHL5wmpP3bhYt0ChRDbsMapfh_QAQN1He3Ftj4Wa_S_fz
    ZVns4saLfj6aBoMSQW6rLs19IIvHze7LrGjKyCfPTKXjajebxp-TLPFZCc0JTqTY5
    _0MBAAAA
-
 ]]></artwork>
         </figure>
 	</section>
@@ -598,7 +587,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
      "tbh": "7NRBu9iDdJlYCTOqyeYuLxXv0blEA-yTpmGIrAwKAws"
     }
   }
-
 ]]></artwork>
 	</figure>
 
@@ -678,7 +666,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
    &code_challenge=rBlgOyMY4teiuJMDgOwkrpsAjPyI07D2WsEM-dnq6eE
    &code_challenge_method=tb_s256 HTTP/1.1
  Host: server.example.com
-
 ]]></artwork>
           </figure>
 	  </section>
@@ -729,7 +716,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
  grant_type=authorization_code&code=mJAReTWKX7zI3oHUNd4o3PeNqNqxKGp6
    &code_verifier=provided_tb&client_id=example-native-client-id
-
 ]]></artwork>
           </figure>
 	  </section>
@@ -799,7 +785,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
    &redirect_uri=https%3A%2F%2Fclient%2Eexample%2Eorg%2Fcb
    &code_challenge=referred_tb&code_challenge_method=rtb
  Include-Referred-Token-Binding-ID: true
-
 ]]></artwork>
           </figure>
 
@@ -829,7 +814,6 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
    RXxrYAAAECAEFAdUFTnfQADkn1uDbQnvJEk6oQs38L92gv-KO-qlYadLoDIKe2h53
    hSiKwIP98iRj_unedkNkAMyg9e2mY4Gp7WwBAeDUOwaSXNz1e6gKohwN4SAZ5eNyx
    45Mh8VI4woL1BipLoqrJRoK6dxFkWgHRMuBROcLGUj5PiOoxybQH_Tom3gAA
-
 ]]></artwork>
           </figure>
 	  </section>
