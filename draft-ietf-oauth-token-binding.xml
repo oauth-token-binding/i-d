@@ -3,7 +3,7 @@
 <!DOCTYPE rfc PUBLIC "-//IETF//DTD RFC 2629//EN"
 "http://xml2rfc.tools.ietf.org/authoring/rfc2629.dtd">
 
-<rfc category="std" docName="draft-ietf-oauth-token-binding-02" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-oauth-token-binding-03" ipr="trust200902">
 
   <?rfc toc="yes" ?>
   <?rfc tocdepth="5" ?>
@@ -247,8 +247,8 @@
    L0UT4fsKKjL6PukuOT00qzamoAXxOq7m_id7O3mLpnb_sM7kwSxLi7iNHzzDgCAkP
    t3lHwAAA
 
-refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
-  &grant_type=refresh_token&client_id=example-native-client-id
+ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
+   &grant_type=refresh_token&client_id=example-native-client-id
 ]]></artwork>
       </figure>
 
@@ -390,7 +390,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       by redirecting the user-agent with the following HTTP response:
     </t>
 
-<figure title="Authorization Request" anchor="AuthzRespEx">
+<figure title="Authorization Response" anchor="AuthzRespEx">
   <artwork><![CDATA[
  HTTP/1.1 302 Found
  Location: https://client.example.org/cb#state=rM8pZxG1c3gKy6rEbsD8s
@@ -498,7 +498,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
       Referred Token Binding ID and delivers it in a response the client.
     </t>
 
-          <figure title="Authorization Request" anchor="TokenEndpointRespEx">
+          <figure title="Response" anchor="TokenEndpointRespEx">
             <artwork><![CDATA[
  HTTP/1.1 200 OK
  Content-Type: application/json
@@ -563,7 +563,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
           <artwork><![CDATA[
  GET /api/stuff HTTP/1.1
  Host: resource.example.org
- Content-Type: application/x-www-form-urlencoded
+ Authorization: Bearer eyJhbGciOiJFUzI1NiIsI[...omitted...]1cs29j5c3
  Sec-Token-Binding: AIkAAgBBQLgtRpWFPN66kxhxGrtaKrzcMtHw7HV8yMk_-MdR
    XJXbDMYxZCWnCASRRrmHHHL5wmpP3bhYt0ChRDbsMapfh_QAQN1He3Ftj4Wa_S_fz
    ZVns4saLfj6aBoMSQW6rLs19IIvHze7LrGjKyCfPTKXjajebxp-TLPFZCc0JTqTY5
@@ -678,7 +678,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             request looks something like the following (with extra line breaks for display purposes only).
           </t>
 
-          <figure title="Authorization Request" anchor="NativeCodeChallengeEx">
+          <figure title="Authorization Request with PKCE Challenge" anchor="NativeCodeChallengeEx">
             <artwork><![CDATA[
  GET /as/authorization.oauth2?response_type=code
    &client_id=example-native-client-id&state=oUC2jyYtzRCrMyWrVnGj
@@ -723,7 +723,7 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
             <spanx style="verb">pNVKtPuQFvylNYn000QowWrQKoeMkeX9H32hVuU71Bs</spanx>.
           </t>
 
-          <figure title="Authorization Request" anchor="NativeCodeVerifierEx">
+          <figure title="Token Request with PKCE Verifier" anchor="NativeCodeVerifierEx">
 <artwork><![CDATA[
  POST /as/token.oauth2 HTTP/1.1
  Host: server.example.com
@@ -1391,7 +1391,12 @@ refresh_token=ACClZEIQTjW9arT9GOJGGd7QNwqOMmUYfsJTiv8his4
 
     <section anchor="History" title="Document History">
       <t>[[ to be removed by the RFC Editor before publication as an RFC ]]</t>
-
+      <t>
+  -03
+  <list style="symbols">
+    <t>Fix a few mistakes in and around the examples that were noticed preparing the slides for IETF 98 Chicago.</t>
+  </list>
+      </t>
       <t>
 	-02
 	<list style="symbols">
