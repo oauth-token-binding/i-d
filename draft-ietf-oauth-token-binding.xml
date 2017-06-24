@@ -176,7 +176,7 @@
       A native application client makes the following access token request with an
       authorization code using a TLS connection where Token
       Binding has been negotiated. A PKCE <spanx style="verb">code_verifier</spanx> is
-      included because use the of PKCE is considered best practice for native
+      included because use of PKCE is considered best practice for native
       application clients <xref target="I-D.ietf-oauth-native-apps"/>.
       The base64url-encoded representation of
       the exported keying material (EKM) from that TLS connection is
