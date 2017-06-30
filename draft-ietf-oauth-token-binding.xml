@@ -343,8 +343,8 @@
 	  in a way that can be accessed by the protected resource.
 	  Such methods include embedding the Referred Token Binding ID
 	  (or a cryptographic hash of it) in the issued access token itself,
-	  possibly using the syntax described at <xref target="Representation"/>,
-	  or through token introspection <xref target="RFC7662"/>.
+    possibly using the syntax described in <xref target="Representation"/>,
+    or through token introspection as described in <xref target="introspect"/>.
 	  The method for associating the referred token binding ID with the access token
 	  is determined by the authorization server and the protected resource,
 	  and is beyond the scope for this specification.
@@ -442,8 +442,8 @@
 	  in a way that can be accessed by the protected resource.
 	  Such methods include embedding the Referred Token Binding ID
 	  (or a cryptographic hash of it) in the issued access token itself,
-	  possibly using the syntax described at <xref target="Representation"/>,
-	  or through token introspection <xref target="RFC7662"/>.
+	  possibly using the syntax described in <xref target="Representation"/>,
+	  or through token introspection as described in <xref target="introspect"/>.
 	  The method for associating the referred token binding ID with the access token
 	  is determined by the authorization server and the protected resource,
 	  and is beyond the scope for this specification.
@@ -609,6 +609,50 @@
 ]]></artwork>
 	</figure>
 
+      </section>
+
+      <section anchor="introspect" title="Representing Token Binding in Introspection Responses">
+    <t>
+      <xref target="RFC7662">OAuth 2.0 Token Introspection</xref> defines a
+      method for a protected resource to query
+      an authorization server about the active state of an
+      access token as well as to determine meta-information about the token.
+    </t>
+    <t>
+      For a token bound access token, the hash of the
+      Token Binding ID to which the token is bound
+      is conveyed to the protected resource as meta-information
+      in a token introspection response. The hash is conveyed using same structure as the
+      token binding hash confirmation method, described in
+      <xref target="Representation"/>, as a top-level member of the introspection response JSON.
+      The protected resource compares
+      that token binding hash to a hash of the provided Token Binding ID
+      and rejects the request, if they do not match.
+    </t>
+    <t>
+      The following is an example of an introspection response for an active token bound access token with
+      an <spanx style="verb">tbh</spanx> token binding hash confirmation method.
+    </t>
+
+        <figure anchor="tbh7662" title="Example Introspection Response for a Token Bound Access Token">
+          <artwork><![CDATA[
+
+  HTTP/1.1 200 OK
+  Content-Type: application/json
+
+  {
+    "active": true,
+    "iss": "https://server.example.com",
+    "aud": "https://resource.example.org",
+    "sub": "brian@example.com"
+    "iat": 1467324320,
+    "exp": 1467324920,
+    "cnf":{
+      "tbh": "7NRBu9iDdJlYCTOqyeYuLxXv0blEA-yTpmGIrAwKAws"
+    }
+  }]]>
+          </artwork>
+        </figure>
       </section>
 
     </section>
@@ -1354,6 +1398,7 @@
 	The authors would like to thank the following people for their contributions to the specification:
 	Dirk Balfanz,
 	Andrei Popov,
+  Justin Richer,
 	and
 	Nat Sakimura.
       </t>
@@ -1366,10 +1411,6 @@
 	    What should we do in the case that a refresh request for a token bound access token
 	    is received when the refresh token used in the request is not token bound?
 	  </t>
-    <t>
-      Should the scope of this document include standardizing or recommending how to convey token binding
-      information of an access token via RFC 7662 OAuth 2.0 Token Introspection?
-    </t>
     <t>
       Should the scope of this document include standardization or guidance on token binding
       of JWT Client Authentication and/or Authorization Grants from RFC 7523?
@@ -1394,6 +1435,13 @@
       <t>
   -04
   <list style="symbols">
+    <t>
+      Define how to convey token binding information of an access token via
+      RFC 7662 OAuth 2.0 Token Introspection (note that the Introspection Response
+      Registration request for cnf/Confirmation is in
+      https://tools.ietf.org/html/draft-ietf-oauth-mtls-02#section-4.3 which will
+      likely be published and registered prior to this document).
+    </t>
     <t>Minor editorial fixes.</t>
   </list>
       </t>
