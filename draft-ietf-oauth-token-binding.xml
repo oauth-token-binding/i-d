@@ -1412,6 +1412,23 @@
 	    is received when the refresh token used in the request is not token bound?
 	  </t>
     <t>
+      Currently the only way to request a token bound access token is via the referred token binding.
+      By definition the referred token binding also comes with the provided token binding and the provided token binding
+      is what is used to bind the refresh token. However,
+      web server clients will typically be distributed/clustered and very likely will not
+      want to, or be capable of, dealing with token bound refresh tokens.  Such clients will have
+      credentials established with the AS for authenticating to the token endpoint and refresh tokens
+      are already bound to the client. So token binding the refresh tokens doesn't add much, if anything, in this case.
+      But accessing private token binding keys in a distributed system will be cumbersome or even impossible.
+      Tracking and properly utilizing the association of a token binding key with each individual
+      refresh token will also be exceptionally cumbersome (whereas client credentials are
+      for the client and decoupled from individual refresh tokens) but without some such mechanism
+      the token binding key cannot be changed without implicitly invalidating all the bound refresh tokens
+      the web server client has stored for that AS.
+      It seems necessary to provide some mechanism for a client to opt-out of having refresh tokens
+      token bound while still allowing for token binding of access tokens.
+    </t>
+    <t>
       Should the scope of this document include standardization or guidance on token binding
       of JWT Client Authentication and/or Authorization Grants from RFC 7523?
     </t>
@@ -1443,6 +1460,12 @@
       likely be published and registered prior to this document).
     </t>
     <t>Minor editorial fixes.</t>
+    <t>
+      Added an open issue about needing to allow for opt-out of having refresh tokens
+      bound while still allowing for binding of access tokens
+      (following from mention of the problem on slide 16 of the presentation
+      from Chicago https://www.ietf.org/proceedings/98/slides/slides-98-oauth-sessb-token-binding-00.pdf).
+    </t>
   </list>
       </t>
       <t>
