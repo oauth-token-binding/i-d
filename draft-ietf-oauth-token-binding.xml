@@ -136,7 +136,25 @@
 	only a single TLS connection is involved in the refresh token case.
       </t>
       <t>
-	Token Binding a refresh token requires that the authorization server do two things.
+  For certain types of clients (such as distributed web application clients)
+  there is utility in the use of token bound access tokens,
+  however, supporting token bound refresh tokens is infeasible or even impossible.
+  Therefore the <spanx style="verb">client_refresh_token_token_binding_supported</spanx>
+  client metadata parameter, defined in <xref target="ClientMetadata"/>,
+  indicates to an authorization server the client's ability to support
+  token bound refresh tokens. Authorization servers MUST NOT
+  Token Bind refresh tokens issued to clients that do no support it.
+  Note that, per <xref target="RFC6749">Section 6 of RFC 6749</xref>,
+  a refresh token is bound to the client to which it was issued and
+  confidential clients with client credentials must authenticate with the
+  authorization server in order to use a refresh token.
+  Thus, even in the absence of Token Binding of refresh tokens,
+  there exist protections against unauthorized replay of refresh tokens
+  for confidential clients.
+      </t>
+      <t>
+	Token Binding a refresh token issued to a client that supports it
+  requires that the authorization server do two things.
 	First, when refresh token is sent to the client, the authorization server needs to
 	remember the Provided Token Binding ID
 	and remember its association with the issued refresh token.
@@ -957,46 +975,6 @@
 
     </section>
 
-    <section anchor="Phasing" title="Phasing in Token Binding and Preventing Downgrade Attacks">
-      <t>
-	Many OAuth implementations will be deployed in situations in which
-	not all participants support Token Binding.
-	Any of combination of the client, the authorization server, the protected resource,
-	and the user agent may not yet support Token Binding,
-	in which case it will not work end-to-end.
-      </t>
-      <t>
-	It is a context-dependent deployment choice whether to allow
-	interactions to proceed in which Token Binding is not supported
-	or whether to treat Token Binding failures at any step as fatal errors.
-	Particularly in dynamic deployment environments in which End Users have choices
-	of clients, authorization servers, protected resources, and/or user agents,
-	it is RECOMMENDED that authorizations using one or more components
-	that do not implement Token Binding be allowed to successfully proceed.
-	This enables different components to be upgraded to supporting Token Binding
-	at different times, providing a smooth transition path for
-	phasing in Token Binding.
-	However, when Token Binding has been performed,
-	any Token Binding key mismatches MUST be treated as fatal errors.
-      </t>
-      <t>
-	If all the participants in an authorization interaction
-	support Token Binding and yet one or more of them does not use it,
-	this is likely evidence of a downgrade attack.
-	In this case, the authorization SHOULD be aborted with an error.
-	For instance, if the protected resource knows that the authorization server and the user agent both
-	support Token Binding and yet the access token received does not contain
-	Token Binding information, this is almost certainly a sign of an attack.
-      </t>
-      <t>
-	The authorization server and client
-	can determine whether the other support Token Binding
-	using the metadata values defined in the next section.
-	Whether the user agent supports Token Binding can be determined
-	by whether it negotiated Token Binding for the TLS connection.
-      </t>
-    </section>
-
     <section anchor="Metadata" title="Token Binding Metadata">
       <section anchor="ClientMetadata" title="Token Binding Client Metadata">
 	<t>
@@ -1017,7 +995,9 @@
 	      <vspace/>
 	      OPTIONAL.
 	      Boolean value specifying whether the client supports Token Binding of refresh tokens.
-	      If omitted, the default value is <spanx style="verb">false</spanx>.
+	      If omitted, the default value is <spanx style="verb">false</spanx>. Authorization servers
+        MUST NOT Token Bind refresh tokens issued to a client that does not support Token Binding
+        of refresh tokens.
 	    </t>
 	  </list>
 	</t>
@@ -1051,13 +1031,45 @@
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <t>
-	If a refresh request is received by the authorization server containing a
-	Referred Token Binding ID and the refresh token in the request
-	is not itself token bound, then it is not clear that token binding
-	the access token adds significant value.
-	This situation should be considered an open issue for discussion by the working group.
-      </t>
+      <section anchor="Phasing" title="Phasing in Token Binding and Preventing Downgrade Attacks">
+        <t>
+          Many OAuth implementations will be deployed in situations in which
+          not all participants support Token Binding.
+          Any of combination of the client, the authorization server, the protected resource,
+          and the user agent may not yet support Token Binding,
+          in which case it will not work end-to-end.
+        </t>
+        <t>
+          It is a context-dependent deployment choice whether to allow
+          interactions to proceed in which Token Binding is not supported
+          or whether to treat Token Binding failures at any step as fatal errors.
+          Particularly in dynamic deployment environments in which End Users have choices
+          of clients, authorization servers, protected resources, and/or user agents,
+          it is RECOMMENDED that authorizations using one or more components
+          that do not implement Token Binding be allowed to successfully proceed.
+          This enables different components to be upgraded to supporting Token Binding
+          at different times, providing a smooth transition path for
+          phasing in Token Binding.
+          However, when Token Binding has been performed,
+          any Token Binding key mismatches MUST be treated as fatal errors.
+        </t>
+        <t>
+          If all the participants in an authorization interaction
+          support Token Binding and yet one or more of them does not use it,
+          this is likely evidence of a downgrade attack.
+          In this case, the authorization SHOULD be aborted with an error.
+          For instance, if the protected resource knows that the authorization server and the user agent both
+          support Token Binding and yet the access token received does not contain
+          Token Binding information, this is almost certainly a sign of an attack.
+        </t>
+        <t>
+          The authorization server and client
+          can determine whether the other support Token Binding
+          using the metadata values defined in the next section.
+          Whether the user agent supports Token Binding can be determined
+          by whether it negotiated Token Binding for the TLS connection.
+        </t>
+      </section>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -1333,27 +1345,6 @@
     <section anchor="TBD" title="Open Issues">
       <t>
 	<list style="symbols">
-	  <t>
-	    What should we do in the case that a refresh request for a token bound access token
-	    is received when the refresh token used in the request is not token bound?
-	  </t>
-    <t>
-      Currently the only way to request a token bound access token is via the referred token binding.
-      By definition the referred token binding also comes with the provided token binding and the provided token binding
-      is what is used to bind the refresh token. However,
-      web server clients will typically be distributed/clustered and very likely will not
-      want to, or be capable of, dealing with token bound refresh tokens.  Such clients will have
-      credentials established with the AS for authenticating to the token endpoint and refresh tokens
-      are already bound to the client. So token binding the refresh tokens doesn't add much, if anything, in this case.
-      But accessing private token binding keys in a distributed system will be cumbersome or even impossible.
-      Tracking and properly utilizing the association of a token binding key with each individual
-      refresh token would also be exceptionally cumbersome (whereas client credentials are
-      for the client and decoupled from individual refresh tokens) but without some such mechanism
-      the token binding key cannot be changed without implicitly invalidating all the bound refresh tokens
-      the web server client has stored for that AS.
-      It seems necessary to provide some mechanism for a client to opt-out of having refresh tokens
-      token bound while still allowing for token binding of access tokens.
-    </t>
     <t>
       Should the scope of this document include standardization or guidance on token binding
       of JWT Client Authentication and/or Authorization Grants from RFC 7523?
@@ -1376,6 +1367,12 @@
       <t>
   -05
   <list style="symbols">
+    <t>
+      State that authorization servers must not token bind refresh tokens
+      issued to a client that doesn't support bound refresh tokens,
+      which can be indicated by the "client_refresh_token_token_binding_supported"
+      client metadata parameter.
+    </t>
     <t>
       Remove reference to, and usage of, 'OAuth 2.0 Protected Resource Metadata', which is no longer a going concern.
     </t>
