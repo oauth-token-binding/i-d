@@ -989,10 +989,10 @@
 	Token Binding information, this is almost certainly a sign of an attack.
       </t>
       <t>
-	The authorization server, client, and protected resource
-	can determine whether the others support Token Binding
+	The authorization server and client
+	can determine whether the other support Token Binding
 	using the metadata values defined in the next section.
-	They can determine whether the user agent supports Token Binding
+	Whether the user agent supports Token Binding can be determined
 	by whether it negotiated Token Binding for the TLS connection.
       </t>
     </section>
@@ -1042,25 +1042,6 @@
 	      <vspace/>
 	      OPTIONAL.
 	      Boolean value specifying whether the authorization server supports Token Binding of refresh tokens.
-	      If omitted, the default value is <spanx style="verb">false</spanx>.
-	    </t>
-	  </list>
-	</t>
-      </section>
-
-      <section anchor="ResourceMetadata" title="Token Binding Protected Resource Metadata">
-	<t>
-	  Protected resources supporting Token Binding that also support
-	  the <xref target="OAuth.ResourceMetadata">OAuth 2.0 Protected Resource Metadata</xref>
-	  use this metadata value to declare their support for Token Binding
-	  of access tokens:
-	</t>
-	<t>
-	  <list style="hanging">
-	    <t hangText="resource_access_token_token_binding_supported">
-	      <vspace/>
-	      OPTIONAL.
-	      Boolean value specifying whether the protected resource supports Token Binding of access tokens.
 	      If omitted, the default value is <spanx style="verb">false</spanx>.
 	    </t>
 	  </list>
@@ -1177,38 +1158,7 @@
 	<?rfc subcompact="no"?>
       </section>
 
-      <section anchor="ResourceMetadataRegistration" title="OAuth Protected Resource Metadata Registration">
-	<t>
-	  This specification registers the following client metadata definition
-	  in the IANA "OAuth Protected Resource Metadata" registry
-	  <!-- <xref target="IANA.OAuth.Parameters"/> TBD Uncomment once registry has been established -->
-	  established by <xref target="OAuth.ResourceMetadata"/>:
-	</t>
-
-	<section anchor="ResourceMetadataContents" title="Registry Contents">
-	  <t>
-	    <?rfc subcompact="yes"?>
-	    <list style="symbols">
-	      <t>
-		Resource Metadata Name: <spanx style="verb">resource_access_token_token_binding_supported</spanx>
-	      </t>
-	      <t>
-		Resource Metadata Description:
-		Boolean value specifying whether the protected resource supports Token Binding of access tokens
-	      </t>
-	      <t>
-		Change Controller: IESG
-	      </t>
-	      <t>
-		Specification Document(s): <xref target="ResourceMetadata"/> of [[ this specification ]]
-	      </t>
-	    </list>
-	  </t>
-	</section>
-	<?rfc subcompact="no"?>
-      </section>
       <section anchor="PKCEMethodRegistration" title="PKCE Code Challenge Method Registration">
-
         <t>
           This specification requests registration of the following
           Code Challenge Method Parameter Names
@@ -1312,30 +1262,6 @@
 	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-06"/>
       </reference>
 
-      <reference anchor="OAuth.ResourceMetadata" target="http://tools.ietf.org/html/draft-jones-oauth-resource-metadata-01">
-        <front>
-	  <title abbrev="OAuth 2.0 Protected Resource Metadata">OAuth 2.0 Protected Resource Metadata</title>
-
-	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-	    <organization abbrev="Microsoft">Microsoft</organization>
-	    <address>
-	      <email>mbj@microsoft.com</email>
-	      <uri>http://self-issued.info/</uri>
-	    </address>
-	  </author>
-
-	  <author fullname="Phil Hunt" initials="P." surname="Hunt">
-	    <organization>Oracle</organization>
-	    <address>
-	      <email>phil.hunt@yahoo.com</email>
-	    </address>
-	  </author>
-
-	  <date day="19" month="January" year="2017" />
-        </front>
-	<seriesInfo name="Internet-Draft" value="draft-jones-oauth-resource-metadata-01"/>
-      </reference>
-
       <reference anchor="JWT" target="http://tools.ietf.org/html/rfc7519">
 	<front>
 	  <title>JSON Web Token (JWT)</title>
@@ -1436,8 +1362,6 @@
       The <xref target="Metadata">Metadata</xref> and
       <xref target="Phasing">what can and cannot be reliably inferred from it</xref>
       need additional evaluation and work.
-      <xref target="OAuth.ResourceMetadata">OAuth 2.0 Protected Resource Metadata</xref>
-      is no longer a going concern, but is currently referenced herein.
       Boolean values do not adequately convey Token Binding support, as different components may support
       different key parameters types.
       And successful negotiation likely doesn't provide the application layer info about
@@ -1453,6 +1377,7 @@
   -05
   <list style="symbols">
     <t>
+      Remove reference to, and usage of, 'OAuth 2.0 Protected Resource Metadata', which is no longer a going concern.
     </t>
   </list>
   </t>
