@@ -675,6 +675,61 @@
 
     </section>
 
+    <section anchor="Metadata" title="Token Binding Metadata">
+      <section anchor="ClientMetadata" title="Token Binding Client Metadata">
+        <t>
+          Clients supporting Token Binding that also support
+          the <xref target="RFC7591">OAuth 2.0 Dynamic Client Registration Protocol</xref>
+          use these metadata values to declare their support for Token Binding
+          of access tokens and refresh tokens:
+        </t>
+        <t>
+          <list style="hanging">
+            <t hangText="client_access_token_token_binding_supported">
+              <vspace/>
+              OPTIONAL.
+              Boolean value specifying whether the client supports Token Binding of access tokens.
+              If omitted, the default value is <spanx style="verb">false</spanx>.
+            </t>
+            <t hangText="client_refresh_token_token_binding_supported">
+              <vspace/>
+              OPTIONAL.
+              Boolean value specifying whether the client supports Token Binding of refresh tokens.
+              If omitted, the default value is <spanx style="verb">false</spanx>. Authorization servers
+              MUST NOT Token Bind refresh tokens issued to a client that does not support Token Binding
+              of refresh tokens.
+            </t>
+          </list>
+        </t>
+      </section>
+
+      <section anchor="ASMetadata" title="Token Binding Authorization Server Metadata">
+        <t>
+          Authorization servers supporting Token Binding that also support
+          <xref target="OAuth.AuthorizationMetadata">OAuth 2.0 Authorization Server Metadata</xref>
+          use these metadata values to declare their support for Token Binding
+          of access tokens and refresh tokens:
+        </t>
+        <t>
+          <list style="hanging">
+            <t hangText="as_access_token_token_binding_supported">
+              <vspace/>
+              OPTIONAL.
+              Boolean value specifying whether the authorization server supports Token Binding of access tokens.
+              If omitted, the default value is <spanx style="verb">false</spanx>.
+            </t>
+            <t hangText="as_refresh_token_token_binding_supported">
+              <vspace/>
+              OPTIONAL.
+              Boolean value specifying whether the authorization server supports Token Binding of refresh tokens.
+              If omitted, the default value is <spanx style="verb">false</spanx>.
+            </t>
+          </list>
+        </t>
+      </section>
+
+    </section>
+
     <section anchor="AuthzCodeTokenBinding" title="Token Binding for Authorization Codes">
     <t>
       There are two variations for Token Binding of an authorization code.
@@ -971,61 +1026,6 @@
 	  </section>
 
         </section>
-      </section>
-
-    </section>
-
-    <section anchor="Metadata" title="Token Binding Metadata">
-      <section anchor="ClientMetadata" title="Token Binding Client Metadata">
-	<t>
-	  Clients supporting Token Binding that also support
-	  the <xref target="RFC7591">OAuth 2.0 Dynamic Client Registration Protocol</xref>
-	  use these metadata values to declare their support for Token Binding
-	  of access tokens and refresh tokens:
-	</t>
-	<t>
-	  <list style="hanging">
-	    <t hangText="client_access_token_token_binding_supported">
-	      <vspace/>
-	      OPTIONAL.
-	      Boolean value specifying whether the client supports Token Binding of access tokens.
-	      If omitted, the default value is <spanx style="verb">false</spanx>.
-	    </t>
-	    <t hangText="client_refresh_token_token_binding_supported">
-	      <vspace/>
-	      OPTIONAL.
-	      Boolean value specifying whether the client supports Token Binding of refresh tokens.
-	      If omitted, the default value is <spanx style="verb">false</spanx>. Authorization servers
-        MUST NOT Token Bind refresh tokens issued to a client that does not support Token Binding
-        of refresh tokens.
-	    </t>
-	  </list>
-	</t>
-      </section>
-
-      <section anchor="ASMetadata" title="Token Binding Authorization Server Metadata">
-	<t>
-	  Authorization servers supporting Token Binding that also support
-	  <xref target="OAuth.AuthorizationMetadata">OAuth 2.0 Authorization Server Metadata</xref>
-	  use these metadata values to declare their support for Token Binding
-	  of access tokens and refresh tokens:
-	</t>
-	<t>
-	  <list style="hanging">
-	    <t hangText="as_access_token_token_binding_supported">
-	      <vspace/>
-	      OPTIONAL.
-	      Boolean value specifying whether the authorization server supports Token Binding of access tokens.
-	      If omitted, the default value is <spanx style="verb">false</spanx>.
-	    </t>
-	    <t hangText="as_refresh_token_token_binding_supported">
-	      <vspace/>
-	      OPTIONAL.
-	      Boolean value specifying whether the authorization server supports Token Binding of refresh tokens.
-	      If omitted, the default value is <spanx style="verb">false</spanx>.
-	    </t>
-	  </list>
-	</t>
       </section>
 
     </section>
@@ -1363,6 +1363,11 @@
     </t>
     <t>
       Remove reference to, and usage of, 'OAuth 2.0 Protected Resource Metadata', which is no longer a going concern.
+    </t>
+    <t>
+      Moved "Token Binding Metadata" section before "Token Binding for Authorization Codes" to be closer
+      to the "Token Binding for Access Tokens" and "Token Binding for Refresh Tokens", to which it is more
+      closely related.
     </t>
     <t>
       Update references for draft-ietf-tokbind- negotiation, protocol, and https.
