@@ -1031,7 +1031,7 @@
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <section anchor="Phasing" title="Phasing in Token Binding and Preventing Downgrade Attacks">
+      <section anchor="Phasing" title="Phasing in Token Binding">
         <t>
           Many OAuth implementations will be deployed in situations in which
           not all participants support Token Binding.
@@ -1054,20 +1054,13 @@
           any Token Binding key mismatches MUST be treated as fatal errors.
         </t>
         <t>
-          If all the participants in an authorization interaction
-          support Token Binding and yet one or more of them does not use it,
-          this is likely evidence of a downgrade attack.
-          In this case, the authorization SHOULD be aborted with an error.
-          For instance, if the protected resource knows that the authorization server and the user agent both
-          support Token Binding and yet the access token received does not contain
-          Token Binding information, this is almost certainly a sign of an attack.
-        </t>
-        <t>
-          The authorization server and client
-          can determine whether the other support Token Binding
-          using the metadata values defined in the next section.
-          Whether the user agent supports Token Binding can be determined
-          by whether it negotiated Token Binding for the TLS connection.
+          In more controlled deployment environments where the participants in an authorization interaction
+          are known or expected to support Token Binding and yet one or more of them does not use it,
+          the authorization SHOULD be aborted with an error.
+          For instance, an authorization server should reject a token request that does not include the
+          <spanx style="verb">Sec-Token-Binding</spanx> header, if the request is from a client known to
+          support Token Binding (via configuration or the client_access_token_token_binding_supported
+          metadata parameter).
         </t>
       </section>
     </section>
@@ -1349,15 +1342,6 @@
       Should the scope of this document include standardization or guidance on token binding
       of JWT Client Authentication and/or Authorization Grants from RFC 7523?
     </t>
-    <t>
-      The <xref target="Metadata">Metadata</xref> and
-      <xref target="Phasing">what can and cannot be reliably inferred from it</xref>
-      need additional evaluation and work.
-      Boolean values do not adequately convey Token Binding support, as different components may support
-      different key parameters types.
-      And successful negotiation likely doesn't provide the application layer info about
-      all the supported key parameters types but rather just the one that was negotiated.
-    </t>
         </list>
       </t>
     </section>
@@ -1372,6 +1356,9 @@
       issued to a client that doesn't support bound refresh tokens,
       which can be indicated by the "client_refresh_token_token_binding_supported"
       client metadata parameter.
+    </t>
+    <t>
+      Adjust the language around aborting authorizations in Phasing in Token Binding to be somewhat more general and not only about downgrades.
     </t>
     <t>
       Remove reference to, and usage of, 'OAuth 2.0 Protected Resource Metadata', which is no longer a going concern.
