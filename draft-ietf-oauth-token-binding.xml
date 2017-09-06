@@ -1059,7 +1059,8 @@
           the authorization SHOULD be aborted with an error.
           For instance, an authorization server should reject a token request that does not include the
           <spanx style="verb">Sec-Token-Binding</spanx> header, if the request is from a client known to
-          support Token Binding (via configuration or the client_access_token_token_binding_supported
+          support Token Binding (via configuration or the
+          <spanx style="verb">client_access_token_token_binding_supported</spanx>
           metadata parameter).
         </t>
       </section>
