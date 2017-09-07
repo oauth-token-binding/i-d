@@ -68,7 +68,8 @@
     <abstract>
       <t>
 	This specification enables OAuth 2.0 implementations to apply
-	Token Binding to Access Tokens, Authorization Codes, and Refresh Tokens.
+	Token Binding to Access Tokens, Authorization Codes, Refresh Tokens,
+  JWT Authorization Grants, and JWT Client Authentication.
   This cryptographically binds these tokens to a client's Token Binding key
   pair, possession of which is proven on the TLS connections over which the
   tokens are intended to be used.
@@ -86,7 +87,8 @@
   TLS Extension for Token Binding Protocol Negotiation</xref>,
 	<xref target="I-D.ietf-tokbind-protocol">The Token Binding Protocol Version 1.0</xref>
 	and <xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>)
-	to Access Tokens, Authorization Codes, and Refresh Tokens.
+  to Access Tokens, Authorization Codes, Refresh Tokens,
+  JWT Authorization Grants, and JWT Client Authentication.
   This cryptographically binds these tokens to a client's Token Binding key
   pair, possession of which is proven on the TLS connections over which the
   tokens are intended to be used.
@@ -1030,6 +1032,87 @@
 
     </section>
 
+    <section anchor="tb7523" title="Token Binding JWT Authorization Grants and Client Authentication">
+      <t>
+        The <xref target="RFC7523">JWT Profile for OAuth 2.0 Client Authentication and
+        Authorization Grants</xref> defines the use of a bearer JWTs
+        as a means for requesting an OAuth 2.0 access token as well as
+        for client authentication.
+        This section describes variants for that profile enabling the application of Token
+        Binding to JWT client authentication and JWT authorization grants.
+      </t>
+      <section anchor="tb7523processing" title="JWT Format and Processing Requirements">
+        <t>
+          In addition the requirements set forth in <xref target="RFC7523">Section 3 of RFC 7523</xref>,
+          the following criteria must also be met for token bound JWTs used as authorization
+          grants or for client authentication.
+        </t>
+        <t>
+          <list style='symbols'>
+            <t>
+              The JWT MUST contain an <spanx style="verb">cnf</spanx>
+              (confirmation) claim with a <spanx style="verb">tbh</spanx>
+              (token binding hash) member identifying the Token Binding ID
+              of the Provided Token Binding used by the client on the TLS
+              connection to the authorization server.
+              The authorization server MUST reject any JWT that has a token binding hash
+              confirmation that does not match the
+              Provided Token Binding ID from the
+              <spanx style="verb">Sec-Token-Binding</spanx> header of the request.
+            </t>
+          </list>
+        </t>
+      </section>
+      <section anchor="tb7523authn" title="Token Bound JWTs for Client Authentication">
+        <t>
+          To use a token bound JWT for client authentication, the client uses
+          the parameter values and encodings from
+          <xref target="RFC7523">Section 2.2 of RFC 7523</xref> with one exception,
+          the value of the <spanx style='verb'>client_assertion_type</spanx> is
+            <spanx style='verb'>urn:ietf:params:oauth:client-assertion-type:jwt-token-bound</spanx>.
+        </t>
+
+        <t>
+          The "OAuth Token Endpoint Authentication Methods" registry
+          <xref target="IANA.OAuth.Parameters"/> contains values, each of which specify a
+          method of authenticating a client to the authorization server.  The values are
+          used to indicated supported and utilized client authentication methods
+          in authorization server metadata, such as
+          <xref target="OpenID.Discovery"/> and <xref target="OAuth.AuthorizationMetadata"/>,
+          and in
+          <xref target="RFC7591">OAuth 2.0 Dynamic Client Registration Protocol</xref>.
+          The following authentication method values are defined and registered for
+          Token Bound JWT for client authentication.
+        </t>
+        <t>
+          <list style="hanging">
+            <t hangText="private_key_token_bound_jwt">
+              <vspace/>
+              Indicates that client authentication to the authorization server will occur with a Token Bound
+              JWT, which is signed with a client's private key.
+            </t>
+            <t hangText="client_secret_token_bound_jwt">
+              <vspace/>
+              Indicates that client authentication to the authorization server will occur with a Token Bound
+              JWT, which is integrity protected with a MAC using
+              the octets of the UTF-8 representation of the client secret as the shared key.
+            </t>
+          </list>
+        </t>
+
+      </section>
+      <section anchor="tb7523grant" title="Token Bound JWTs for as Authorization Grants">
+        <t>
+          To use a token bound JWT for an authorization grant, the client uses
+          the parameter values and encodings from
+          <xref target="RFC7523">Section 2.1 of RFC 7523</xref> with one exception,
+          the value of the <spanx style='verb'>grant_type</spanx> is
+          <spanx style='verb'>urn:ietf:params:oauth:grant-type:jwt-token-bound</spanx>.
+        </t>
+
+      </section>
+    </section>
+
     <section anchor="Security" title="Security Considerations">
       <section anchor="Phasing" title="Phasing in Token Binding">
         <t>
@@ -1196,6 +1279,73 @@
       </section>
 
     </section>
+
+    <section anchor="client_authIANA" title="Token Endpoint Authentication Method Registration">
+      <t>
+        This specification requests registration of the following values
+        in the IANA "OAuth Token Endpoint Authentication Methods" registry
+        <xref target="IANA.OAuth.Parameters"/> established by <xref target="RFC7591"/>.
+      </t>
+      <section title="Registry Contents">
+        <t>
+          <?rfc subcompact="yes"?>
+          <list style='symbols'>
+            <t>Token Endpoint Authentication Method Name: <spanx style="verb">client_secret_token_bound_jwt</spanx></t>
+            <t>Change Controller: IESG</t>
+            <t>Specification Document(s): <xref target="tb7523"/> of [[ this specification ]]</t>
+          </list>
+          <?rfc subcompact="no"?>
+        </t>
+        <t>
+          <?rfc subcompact="yes"?>
+          <list style='symbols'>
+            <t>Token Endpoint Authentication Method Name: <spanx style="verb">private_key_token_bound_jwt</spanx></t>
+            <t>Change Controller: IESG</t>
+            <t>Specification Document(s): <xref target="tb7523"/> of [[ this specification ]]</t>
+          </list>
+          <?rfc subcompact="no"?>
+        </t>
+      </section>
+    </section>
+
+    <section title='Sub-Namespace Registrations' anchor="urnIANA">
+      <t>
+        This specification requests registration of the following values in the
+        IANA "OAuth URI" registry
+        <xref target="IANA.OAuth.Parameters"/>
+        established in
+        <xref target="RFC6755">An IETF URN Sub-Namespace for OAuth</xref>.
+      </t>
+      <section title="Registry Contents">
+        <t>
+          <?rfc subcompact="yes"?>
+          <list style='symbols'>
+            <t>URN: urn:ietf:params:oauth:grant-type:jwt-token-bound</t>
+            <t>Common Name: Token Bound JWT Grant Type for OAuth 2.0</t>
+            <t>Change controller: IESG</t>
+            <t>Specification Document:
+              <xref target="tb7523"/>
+              of [[ this specification ]]
+            </t>
+          </list>
+          <?rfc subcompact="no"?>
+        </t>
+        <t>
+          <?rfc subcompact="yes"?>
+          <list style='symbols'>
+            <t>URN: urn:ietf:params:oauth:client-assertion-type:jwt-token-bound</t>
+            <t>Common Name: Token Bound JWT for OAuth 2.0 Client Authentication</t>
+            <t>Change controller: IESG</t>
+            <t>Specification Document:
+              <xref target="tb7523"/>
+              of [[ this specification ]]
+            </t>
+          </list>
+          <?rfc subcompact="no"?>
+        </t>
+      </section>
+    </section>
+
   </middle>
 
   <back>
@@ -1204,6 +1354,8 @@
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4648"?>  <!-- base64 -->
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6749"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7230"?>
+      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7523"?>
+      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7591"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7636"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7662"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7800"?>
@@ -1319,10 +1471,12 @@
     </references>
 
     <references title="Informative References">
-      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7591"?>
-      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7523"?>
       <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-native-apps-08.xml' ?>
+      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6755"?>
+
+      <!-- http://openid.net/2017/02/03/bibxml-files-for-openid-specifications/ -->
       <?rfc include='http://openid.net/bibxml/reference.OpenID.Core.xml' ?>
+      <?rfc include='http://openid.net/bibxml/reference.OpenID.Discovery.xml' ?>
     </references>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
@@ -1336,16 +1490,13 @@
       </t>
     </section>
 
-    <section anchor="TBD" title="Open Issues">
-      <t>
-	<list style="symbols">
-    <t>
-      Should the scope of this document include standardization or guidance on token binding
-      of JWT Client Authentication and/or Authorization Grants from RFC 7523?
-    </t>
-        </list>
-      </t>
-    </section>
+    <!--<section anchor="TBD" title="Open Issues">-->
+      <!--<t>-->
+	      <!--<list style="symbols">-->
+
+        <!--</list>-->
+      <!--</t>-->
+    <!--</section>-->
 
     <section anchor="History" title="Document History">
       <t>[[ to be removed by the RFC Editor before publication as an RFC ]]</t>
@@ -1357,6 +1508,9 @@
       issued to a client that doesn't support bound refresh tokens,
       which can be indicated by the "client_refresh_token_token_binding_supported"
       client metadata parameter.
+    </t>
+    <t>
+      Add Token Binding for JWT Authorization Grants and JWT Client Authentication.
     </t>
     <t>
       Adjust the language around aborting authorizations in Phasing in Token Binding to be somewhat more general and not only about downgrades.
