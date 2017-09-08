@@ -1081,8 +1081,12 @@
           <xref target="OpenID.Discovery"/> and <xref target="OAuth.AuthorizationMetadata"/>,
           and in
           <xref target="RFC7591">OAuth 2.0 Dynamic Client Registration Protocol</xref>.
-          The following authentication method values are defined and registered for
-          Token Bound JWT for client authentication.
+          The values <spanx style="verb">private_key_jwt</spanx> and <spanx style="verb">client_secret_jwt</spanx>
+          are designated by <xref target="OpenID.Core">OpenID Connect</xref> as authentication method values for
+          bearer JWT client authentication using asymmetric and symmetric <xref target="RFC7515">JWS</xref>
+          algorithms respectively.
+          For Token Bound JWT for client authentication, this specification
+          defines and registers following authentication method values.
         </t>
         <t>
           <list style="hanging">
@@ -1473,6 +1477,7 @@
     <references title="Informative References">
       <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-native-apps-08.xml' ?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6755"?>
+      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7515"?>
 
       <!-- http://openid.net/2017/02/03/bibxml-files-for-openid-specifications/ -->
       <?rfc include='http://openid.net/bibxml/reference.OpenID.Core.xml' ?>
