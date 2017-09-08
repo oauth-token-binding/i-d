@@ -1035,7 +1035,7 @@
     <section anchor="tb7523" title="Token Binding JWT Authorization Grants and Client Authentication">
       <t>
         The <xref target="RFC7523">JWT Profile for OAuth 2.0 Client Authentication and
-        Authorization Grants</xref> defines the use of a bearer JWTs
+        Authorization Grants</xref> defines the use of bearer JWTs
         as a means for requesting an OAuth 2.0 access token as well as
         for client authentication.
         This section describes variants for that profile enabling the application of Token
@@ -1086,7 +1086,7 @@
           bearer JWT client authentication using asymmetric and symmetric <xref target="RFC7515">JWS</xref>
           algorithms respectively.
           For Token Bound JWT for client authentication, this specification
-          defines and registers following authentication method values.
+          defines and registers the following authentication method values.
         </t>
         <t>
           <list style="hanging">
