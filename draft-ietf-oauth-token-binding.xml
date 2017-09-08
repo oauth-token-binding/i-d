@@ -1129,7 +1129,7 @@
         <t>
           It is a context-dependent deployment choice whether to allow
           interactions to proceed in which Token Binding is not supported
-          or whether to treat Token Binding failures at any step as fatal errors.
+          or whether to treat the omission of Token Binding at any step as a fatal error.
           Particularly in dynamic deployment environments in which End Users have choices
           of clients, authorization servers, protected resources, and/or user agents,
           it is RECOMMENDED that authorizations using one or more components
