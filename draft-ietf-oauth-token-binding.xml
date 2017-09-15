@@ -308,7 +308,7 @@
 	<xref target="OpenID.TokenBinding">OpenID Connect Token Bound Authentication 1.0</xref>.
       </t>
       <t>
-	In the OpenID Connect <xref target="OpenID.Core"/> use case,
+	In the <xref target="OpenID.Core">OpenID Connect</xref> use case,
 	HTTP redirects are used to pass information
 	between the identity provider and the relying party;
 	this HTTP redirect makes the Token Binding ID of the relying party
