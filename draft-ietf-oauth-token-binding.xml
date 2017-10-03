@@ -140,7 +140,7 @@
       <t>
   For certain types of clients (such as distributed web application clients)
   there is utility in the use of token bound access tokens,
-  however, supporting token bound refresh tokens is infeasible or even impossible.
+  however, supporting token bound refresh tokens may be infeasible or even impossible.
   Therefore the <spanx style="verb">client_refresh_token_token_binding_supported</spanx>
   client metadata parameter, defined in <xref target="ClientMetadata"/>,
   indicates to an authorization server the client's ability to support
@@ -155,8 +155,7 @@
   for confidential clients.
       </t>
       <t>
-	Token Binding a refresh token issued to a client that supports it
-  requires that the authorization server do two things.
+	Token Binding a refresh token requires that the authorization server do two things.
 	First, when refresh token is sent to the client, the authorization server needs to
 	remember the Provided Token Binding ID
 	and remember its association with the issued refresh token.
@@ -651,7 +650,7 @@
     </t>
     <t>
       The following is an example of an introspection response for an active token bound access token with
-      an <spanx style="verb">tbh</spanx> token binding hash confirmation method.
+      a <spanx style="verb">tbh</spanx> token binding hash confirmation method.
     </t>
 
         <figure anchor="tbh7662" title="Example Introspection Response for a Token Bound Access Token">
@@ -1038,7 +1037,7 @@
         Authorization Grants</xref> defines the use of bearer JWTs
         as a means for requesting an OAuth 2.0 access token as well as
         for client authentication.
-        This section describes variants for that profile enabling the application of Token
+        This section describes extensions to that specification enabling the application of Token
         Binding to JWT client authentication and JWT authorization grants.
       </t>
       <section anchor="tb7523processing" title="JWT Format and Processing Requirements">
@@ -1050,13 +1049,13 @@
         <t>
           <list style='symbols'>
             <t>
-              The JWT MUST contain an <spanx style="verb">cnf</spanx>
+              The JWT MUST contain a <spanx style="verb">cnf</spanx>
               (confirmation) claim with a <spanx style="verb">tbh</spanx>
               (token binding hash) member identifying the Token Binding ID
               of the Provided Token Binding used by the client on the TLS
               connection to the authorization server.
               The authorization server MUST reject any JWT that has a token binding hash
-              confirmation that does not match the
+              confirmation that does not match the corresponding hash of the
               Provided Token Binding ID from the
               <spanx style="verb">Sec-Token-Binding</spanx> header of the request.
             </t>
@@ -1067,7 +1066,7 @@
         <t>
           To use a token bound JWT for client authentication, the client uses
           the parameter values and encodings from
-          <xref target="RFC7523">Section 2.2 of RFC 7523</xref> with one exception,
+          <xref target="RFC7523">Section 2.2 of RFC 7523</xref> with one exception:
           the value of the <spanx style='verb'>client_assertion_type</spanx> is
             <spanx style='verb'>urn:ietf:params:oauth:client-assertion-type:jwt-token-bound</spanx>.
         </t>
@@ -1109,7 +1108,7 @@
         <t>
           To use a token bound JWT for an authorization grant, the client uses
           the parameter values and encodings from
-          <xref target="RFC7523">Section 2.1 of RFC 7523</xref> with one exception,
+          <xref target="RFC7523">Section 2.1 of RFC 7523</xref> with one exception:
           the value of the <spanx style='verb'>grant_type</spanx> is
           <spanx style='verb'>urn:ietf:params:oauth:grant-type:jwt-token-bound</spanx>.
         </t>
