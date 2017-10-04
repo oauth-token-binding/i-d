@@ -24,21 +24,21 @@
       </address>
     </author>
 
+    <author fullname="Brian Campbell" initials="B." surname="Campbell">
+      <organization>Ping Identity</organization>
+      <address>
+        <email>brian.d.campbell@gmail.com</email>
+      </address>
+    </author>
+
     <author fullname="John Bradley" initials="J." surname="Bradley">
-      <organization abbrev="Ping Identity">Ping Identity</organization>
+      <organization>Yubico</organization>
       <address>
         <email>ve7jtb@ve7jtb.com</email>
 	<uri>http://www.thread-safe.com/</uri>
       </address>
     </author>
 
-    <author fullname="Brian Campbell" initials="B." surname="Campbell">
-      <organization>Ping Identity</organization>
-      <address>
-	<email>brian.d.campbell@gmail.com</email>
-	<uri>https://twitter.com/__b_c</uri>
-      </address>
-    </author>
 
    <author fullname="William Denniss" initials="W." surname="Denniss">
       <organization>Google</organization>
