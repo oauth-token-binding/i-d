@@ -145,11 +145,14 @@
   system may be infeasible or even impossible. However, such clients could utilize an access token
   bound to a token binding private key that is local to an individual node by only using the
   shorter lived access token from that node.
-  Therefore the <spanx style="verb">client_refresh_token_token_binding_supported</spanx>
+  As such, authorization servers SHOULD NOT Token Bind refresh tokens issued
+  to clients that do no support it.
+  The <spanx style="verb">client_refresh_token_token_binding_supported</spanx>
   client metadata parameter, defined in <xref target="ClientMetadata"/>,
-  indicates to an authorization server the client's ability to support
-  token bound refresh tokens. Authorization servers SHOULD NOT
-  Token Bind refresh tokens issued to clients that do no support it.
+  indicates to an authorization server a dynamically registered client's ability to support
+  token bound refresh tokens. Authorization servers utilizing static configuration
+  for clients should provide an equivalent configuration option to declare support for
+  token bound refresh tokens.
   Note that, per <xref target="RFC6749">Section 6 of RFC 6749</xref>,
   a refresh token is bound to the client to which it was issued and
   confidential clients with client credentials must authenticate with the
