@@ -1103,6 +1103,14 @@
           </list>
         </t>
 
+        <t>
+          Note that just as with the <spanx style="verb">private_key_jwt</spanx> and
+          <spanx style="verb">client_secret_jwt</spanx> authentication methods,
+          the <spanx style="verb">token_endpoint_auth_signing_alg</spanx> client registration parameter
+          may be used to indicate the JWS algorithm used for signing the client authentication JWT for
+          the authentication methods defined above.
+        </t>
+
       </section>
       <section anchor="tb7523grant" title="Token Bound JWTs for as Authorization Grants">
         <t>
