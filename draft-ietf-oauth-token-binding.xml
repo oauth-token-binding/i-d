@@ -144,7 +144,7 @@
   Therefore the <spanx style="verb">client_refresh_token_token_binding_supported</spanx>
   client metadata parameter, defined in <xref target="ClientMetadata"/>,
   indicates to an authorization server the client's ability to support
-  token bound refresh tokens. Authorization servers MUST NOT
+  token bound refresh tokens. Authorization servers SHOULD NOT
   Token Bind refresh tokens issued to clients that do no support it.
   Note that, per <xref target="RFC6749">Section 6 of RFC 6749</xref>,
   a refresh token is bound to the client to which it was issued and
@@ -697,7 +697,7 @@
               OPTIONAL.
               Boolean value specifying whether the client supports Token Binding of refresh tokens.
               If omitted, the default value is <spanx style="verb">false</spanx>. Authorization servers
-              MUST NOT Token Bind refresh tokens issued to a client that does not support Token Binding
+              SHOULD NOT Token Bind refresh tokens issued to a client that does not support Token Binding
               of refresh tokens.
             </t>
           </list>
@@ -1516,7 +1516,7 @@
   -05
   <list style="symbols">
     <t>
-      State that authorization servers must not token bind refresh tokens
+      State that authorization servers should not token bind refresh tokens
       issued to a client that doesn't support bound refresh tokens,
       which can be indicated by the "client_refresh_token_token_binding_supported"
       client metadata parameter.
