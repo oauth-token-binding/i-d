@@ -140,7 +140,7 @@
       <t>
   Some clients may have difficulty implementing refresh token binding, but
   may still wish to use access token binding. An example of such a client in
-  this category is a distributed web application client where shared access to
+  this category is a distributed web application client where shared access
   to token binding private keys from different nodes in the distributed
   system may be infeasible or even impossible. However, such clients could utilize an access token
   bound to a token binding private key that is local to an individual node by only using the
