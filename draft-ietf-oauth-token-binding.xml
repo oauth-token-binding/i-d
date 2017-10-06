@@ -1166,6 +1166,26 @@
           metadata parameter).
         </t>
       </section>
+      <section title="Binding of Refresh Tokens">
+        <t>
+          <xref target="RFC6749">Section 6 of RFC 6749</xref> requires that
+          a refresh token be bound to the client to which it was issued and that,
+          if the client type is confidential or
+          the client was issued client credentials (or assigned other
+          authentication requirements), the client must authenticate with the
+          authorization server when presenting the refresh token.
+          As a result, for non-public clients, refresh tokens are indirectly bound
+          to the client's credentials and cannot be used without the associated client
+          authentication. Non-public clients then are afforded protections
+          (equivalent to the strength of their authentication credentials) against
+          unauthorized replay of refresh tokens and it is reasonable to not Token Binding
+          refresh tokens for such clients while still Toking Binding the issued access tokens.
+          Refresh tokens issued to public clients, however, do not have the benefit of such
+          protections and authorization servers MAY elect to disallow public clients from
+          registering or establishing configuration that would allow Token Bound access tokens
+          but unbound refresh tokens.
+        </t>
+      </section>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
