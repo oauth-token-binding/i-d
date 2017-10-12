@@ -679,10 +679,8 @@
               OPTIONAL.
               Boolean value specifying whether the client supports Token Binding of refresh tokens.
               If omitted, the default value is <spanx style="verb">false</spanx>.
-              
-              <!-- wdenniss: This sentence could be removed in favor of the phase-in security consideration section-->
-              Authorization servers
-              MUST NOT Token Bind refresh tokens issued to a client that does not support Token Binding
+              Authorization servers MUST NOT Token Bind refresh tokens issued
+              to a client that does not support Token Binding
               of refresh tokens, but MAY reject requests completely from such clients if 
               token binding is required by authorization server policy by returning
               an OAuth error response.
@@ -1145,28 +1143,6 @@
           <spanx style="verb">client_access_token_token_binding_supported</spanx>
           metadata parameter).
         </t>
-        <t>
-          Some web-based confidential clients implemented as distributed nodes may
-          be perfectly capable of implementing access token binding (if the access
-          token remains on the node it was bound to, the token binding keys would
-          be locally available for that node to prove possession), but may struggle with refresh token
-          binding due to an inability to share token binding key material between nodes.
-          As confidential clients already have credentials which are required to
-          use the refresh token, and those credentials should only ever sent over
-          TLS server-to-server between the client and the Token Endpoint, there is still value in
-          token binding access tokens without token binding refresh tokens.
-          Authorization servers SHOULD consider supporting access token binding
-          without refresh token binding for confidential web clients as there are
-          still incremental security benefits to do so.
-        </t>
-        <t>
-          Clients MUST declare through dynamic (<xref target="ClientMetadata"/>) or static registration information
-          what types of token bound tokens they support to enable the server to
-          bind tokens accordingly, taking into account any phase-in policies.
-          Authorization MAY reject requests from any client who does not support
-          token binding (by returning an OAuth error response) per their own
-          security policies.
-        </t>
       </section>
       <section title="Binding of Refresh Tokens">
         <t>
@@ -1186,6 +1162,28 @@
           protections and authorization servers MAY elect to disallow public clients from
           registering or establishing configuration that would allow Token Bound access tokens
           but unbound refresh tokens.
+        </t>
+        <t>
+          Some web-based confidential clients implemented as distributed nodes may
+          be perfectly capable of implementing access token binding (if the access
+          token remains on the node it was bound to, the token binding keys would
+          be locally available for that node to prove possession), but may struggle with refresh token
+          binding due to an inability to share token binding key material between nodes.
+          As confidential clients already have credentials which are required to
+          use the refresh token, and those credentials should only ever sent over
+          TLS server-to-server between the client and the Token Endpoint, there is still value in
+          token binding access tokens without token binding refresh tokens.
+          Authorization servers SHOULD consider supporting access token binding
+          without refresh token binding for confidential web clients as there are
+          still security benefits to do so.
+        </t>
+        <t>
+          Clients MUST declare through dynamic (<xref target="ClientMetadata"/>) or static registration information
+          what types of token bound tokens they support to enable the server to
+          bind tokens accordingly, taking into account any phase-in policies.
+          Authorization MAY reject requests from any client who does not support
+          token binding (by returning an OAuth error response) per their own
+          security policies.
         </t>
       </section>
     </section>
