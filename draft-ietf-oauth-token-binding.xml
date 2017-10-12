@@ -1178,7 +1178,7 @@
           to the client's credentials and cannot be used without the associated client
           authentication. Non-public clients then are afforded protections
           (equivalent to the strength of their authentication credentials) against
-          unauthorized replay of refresh tokens and it is reasonable to not Token Binding
+          unauthorized replay of refresh tokens and it is reasonable to not Token Bind
           refresh tokens for such clients while still Toking Binding the issued access tokens.
           Refresh tokens issued to public clients, however, do not have the benefit of such
           protections and authorization servers MAY elect to disallow public clients from
