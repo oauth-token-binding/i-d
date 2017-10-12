@@ -138,30 +138,6 @@
 	only a single TLS connection is involved in the refresh token case.
       </t>
       <t>
-  Some clients may have difficulty implementing refresh token binding, but
-  may still wish to use access token binding. An example of such a client in
-  this category is a distributed web application client where shared access
-  to token binding private keys from different nodes in the distributed
-  system may be infeasible or even impossible. However, such clients could utilize an access token
-  bound to a token binding private key that is local to an individual node by only using the
-  shorter-lived access token from that node.
-  As such, authorization servers SHOULD NOT Token Bind refresh tokens issued
-  to clients that do no support it.
-  The <spanx style="verb">client_refresh_token_token_binding_supported</spanx>
-  client metadata parameter, defined in <xref target="ClientMetadata"/>,
-  indicates to an authorization server a dynamically registered client's ability to support
-  token bound refresh tokens. Authorization servers utilizing static configuration
-  for clients should provide an equivalent configuration option to declare support for
-  token bound refresh tokens.
-  Note that, per <xref target="RFC6749">Section 6 of RFC 6749</xref>,
-  a refresh token is bound to the client to which it was issued and
-  confidential clients with client credentials must authenticate with the
-  authorization server in order to use a refresh token.
-  Thus, even in the absence of Token Binding of refresh tokens,
-  there exist protections against unauthorized replay of refresh tokens
-  for confidential clients.
-      </t>
-      <t>
 	Token Binding a refresh token requires that the authorization server do two things.
 	First, when refresh token is sent to the client, the authorization server needs to
 	remember the Provided Token Binding ID
@@ -186,7 +162,6 @@
 	such as grant type information.
 	These choices make no difference to the client, since the refresh token is opaque to it.
       </t>
-
     <section anchor="RefreshTokenBindingEx" title="Example Token Binding for Refresh Tokens">
     <t>
       This section provides an example of what the interactions around a
@@ -703,9 +678,12 @@
               <vspace/>
               OPTIONAL.
               Boolean value specifying whether the client supports Token Binding of refresh tokens.
-              If omitted, the default value is <spanx style="verb">false</spanx>. Authorization servers
-              SHOULD NOT Token Bind refresh tokens issued to a client that does not support Token Binding
-              of refresh tokens.
+              If omitted, the default value is <spanx style="verb">false</spanx>.
+              Authorization servers MUST NOT Token Bind refresh tokens issued
+              to a client that does not support Token Binding
+              of refresh tokens, but MAY reject requests completely from such clients if 
+              token binding is required by authorization server policy by returning
+              an OAuth error response.
             </t>
           </list>
         </t>
@@ -1184,6 +1162,28 @@
           protections and authorization servers MAY elect to disallow public clients from
           registering or establishing configuration that would allow Token Bound access tokens
           but unbound refresh tokens.
+        </t>
+        <t>
+          Some web-based confidential clients implemented as distributed nodes may
+          be perfectly capable of implementing access token binding (if the access
+          token remains on the node it was bound to, the token binding keys would
+          be locally available for that node to prove possession), but may struggle with refresh token
+          binding due to an inability to share token binding key material between nodes.
+          As confidential clients already have credentials which are required to
+          use the refresh token, and those credentials should only ever sent over
+          TLS server-to-server between the client and the Token Endpoint, there is still value in
+          token binding access tokens without token binding refresh tokens.
+          Authorization servers SHOULD consider supporting access token binding
+          without refresh token binding for confidential web clients as there are
+          still security benefits to do so.
+        </t>
+        <t>
+          Clients MUST declare through dynamic (<xref target="ClientMetadata"/>) or static registration information
+          what types of token bound tokens they support to enable the server to
+          bind tokens accordingly, taking into account any phase-in policies.
+          Authorization MAY reject requests from any client who does not support
+          token binding (by returning an OAuth error response) per their own
+          security policies.
         </t>
       </section>
     </section>
