@@ -178,7 +178,7 @@
       authorization code using a TLS connection where Token
       Binding has been negotiated. A PKCE <spanx style="verb">code_verifier</spanx> is
       included because use of PKCE is considered best practice for native
-      application clients <xref target="I-D.ietf-oauth-native-apps"/>.
+      application clients <xref target="BCP212"/>.
       The base64url-encoded representation of
       the exported keying material (EKM) from that TLS connection is
       <spanx style="verb">p6ZuSwfl6pIe8es5KyeV76T4swZmQp0_awd27jHfrbo</spanx>, which is
@@ -1510,7 +1510,27 @@
     </references>
 
     <references title="Informative References">
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-oauth-native-apps-08.xml' ?>
+      <reference anchor="BCP212" target="https://www.rfc-editor.org/info/rfc8252">
+        <front>
+          <title>OAuth 2.0 for Native Apps</title>
+          <author initials="W." surname="Denniss" fullname="W. Denniss">
+            <organization/>
+          </author>
+          <author initials="J." surname="Bradley" fullname="J. Bradley">
+            <organization/>
+          </author>
+          <date year="2017" month="October"/>
+          <abstract>
+            <t>OAuth 2.0 authorization requests from native apps should only be made through external user-agents, primarily the user's browser. This specification details the security and usability reasons why this is
+              the case and how native apps and authorization servers can implement this best practice.
+            </t>
+          </abstract>
+        </front>
+        <seriesInfo name="BCP" value="212"/>
+        <seriesInfo name="RFC" value="8252"/>
+        <seriesInfo name="DOI" value="10.17487/RFC8252"/>
+      </reference>
+
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6755"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7515"?>
 
@@ -1564,7 +1584,8 @@
       closely related.
     </t>
     <t>
-      Update references for draft-ietf-tokbind- negotiation(-10), protocol(-16), and https(-10), as well as draft-ietf-oauth-discovery(-07).
+      Update references for draft-ietf-tokbind- negotiation(-10), protocol(-16), and https(-10),
+      as well as draft-ietf-oauth-discovery(-07), and BCP212/RFC8252 OAuth 2.0 for Native Apps.
     </t>
   </list>
   </t>
