@@ -1400,9 +1400,9 @@
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7800"?>
 
 
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-protocol-15.xml' ?>
+      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-protocol-16.xml' ?>
       <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-https-10.xml' ?>
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-negotiation-09.xml' ?>
+      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-negotiation-10.xml' ?>
 
 
 
@@ -1426,7 +1426,7 @@
         </front>
       </reference>
 
-      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-06">
+      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-07">
         <front>
 	  <title>OAuth 2.0 Authorization Server Metadata</title>
 
@@ -1456,7 +1456,7 @@
 
 	  <date day="10" month="March" year="2017" />
         </front>
-	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-06"/>
+	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-07"/>
       </reference>
 
       <reference anchor="JWT" target="http://tools.ietf.org/html/rfc7519">
@@ -1564,7 +1564,7 @@
       closely related.
     </t>
     <t>
-      Update references for draft-ietf-tokbind- negotiation, protocol, and https.
+      Update references for draft-ietf-tokbind- negotiation(-10), protocol(-16), and https(-10), as well as draft-ietf-oauth-discovery(-07).
     </t>
   </list>
   </t>
