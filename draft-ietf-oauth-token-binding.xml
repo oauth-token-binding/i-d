@@ -1170,7 +1170,7 @@
           be locally available for that node to prove possession), but may struggle with refresh token
           binding due to an inability to share token binding key material between nodes.
           As confidential clients already have credentials which are required to
-          use the refresh token, and those credentials should only ever sent over
+          use the refresh token, and those credentials should only ever be sent over
           TLS server-to-server between the client and the Token Endpoint, there is still value in
           token binding access tokens without token binding refresh tokens.
           Authorization servers SHOULD consider supporting access token binding
