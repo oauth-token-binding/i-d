@@ -55,7 +55,7 @@
       </address>
     </author>
 
-    <date />
+    <date day="26" month="October" year="2017" />
 
     <area>Security</area>
     <workgroup>OAuth Working Group</workgroup>
@@ -1406,7 +1406,7 @@
 
 
 
-      <reference anchor="OpenID.TokenBinding" target="http://openid.net/specs/openid-connect-token-bound-authentication-1_0.html">
+      <reference anchor="OpenID.TokenBinding" target="http://openid.net/specs/openid-connect-token-bound-authentication-1_0-02.html">
         <front>
           <title>OpenID Connect Token Bound Authentication 1.0</title>
 
@@ -1422,7 +1422,7 @@
 	    <organization>Ping Identity</organization>
 	  </author>
 
-          <date day="4" month="July" year="2016"/>
+          <date day="26" month="October" year="2017"/>
         </front>
       </reference>
 
