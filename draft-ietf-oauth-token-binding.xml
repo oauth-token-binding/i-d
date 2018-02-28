@@ -1427,7 +1427,7 @@
         </front>
       </reference>
 
-      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-07">
+      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-09">
         <front>
 	  <title>OAuth 2.0 Authorization Server Metadata</title>
 
@@ -1457,7 +1457,7 @@
 
 	  <date day="10" month="March" year="2017" />
         </front>
-	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-07"/>
+	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-09"/>
       </reference>
 
       <reference anchor="JWT" target="http://tools.ietf.org/html/rfc7519">
@@ -1565,7 +1565,7 @@
     -06
     <list style="symbols">
       <t>Use the boilerplate from RFC 8174.</t>
-      <t>Update reference for draft-ietf-tokbind-https to -12.</t>
+      <t>Update reference for draft-ietf-tokbind-https to -12 and draft-ietf-oauth-discovery to -09.</t>
     </list>
   </t>
   <t>
