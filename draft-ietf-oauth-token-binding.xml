@@ -1182,7 +1182,7 @@
           Clients MUST declare through dynamic (<xref target="ClientMetadata"/>) or static registration information
           what types of token bound tokens they support to enable the server to
           bind tokens accordingly, taking into account any phase-in policies.
-          Authorization MAY reject requests from any client who does not support
+          Authorization servers MAY reject requests from any client who does not support
           token binding (by returning an OAuth error response) per their own
           security policies.
         </t>
@@ -1566,6 +1566,7 @@
     <list style="symbols">
       <t>Use the boilerplate from RFC 8174.</t>
       <t>Update reference for draft-ietf-tokbind-https to -12 and draft-ietf-oauth-discovery to -09.</t>
+      <t>Minor editorial fixes.</t>
     </list>
   </t>
   <t>
