@@ -3,7 +3,7 @@
 <!DOCTYPE rfc PUBLIC "-//IETF//DTD RFC 2629//EN"
 "http://xml2rfc.tools.ietf.org/authoring/rfc2629.dtd">
 
-<rfc category="std" docName="draft-ietf-oauth-token-binding-06" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-oauth-token-binding-07" ipr="trust200902">
 
   <?rfc toc="yes" ?>
   <?rfc tocdepth="5" ?>
@@ -1561,6 +1561,12 @@
 
     <section anchor="History" title="Document History">
       <t>[[ to be removed by the RFC Editor before publication as an RFC ]]</t>
+  <t>
+    -07
+    <list style="symbols">
+      <t></t>
+    </list>
+  </t>
       <t>
     -06
     <list style="symbols">
