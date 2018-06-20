@@ -589,6 +589,8 @@
 	  in an ID Token.
 	  The value of the <spanx style="verb">tbh</spanx> member is the
 	  base64url encoding of the SHA-256 hash of the Token Binding ID.
+      All all trailing pad '=' characters are omitted from the encoded value
+      and no line breaks, whitespace, or other additional characters are included.
 	</t>
 	<t>
 	  The following example demonstrates the JWT Claims Set of an access token
@@ -1564,7 +1566,8 @@
   <t>
     -07
     <list style="symbols">
-      <t></t>
+      <t>Explicitly state that the base64url encoding of the tbh value doesn't include
+          any trailing pad characters, line breaks, whitespace, etc.</t>
     </list>
   </t>
       <t>
