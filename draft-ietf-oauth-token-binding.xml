@@ -1403,9 +1403,9 @@
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7800"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8174"?>
 
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-protocol-16.xml' ?>
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-https-12.xml' ?>
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-negotiation-10.xml' ?>
+      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-protocol-19.xml' ?>
+      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-https-17.xml' ?>
+      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-negotiation-14.xml' ?>
 
 
 
@@ -1429,7 +1429,7 @@
         </front>
       </reference>
 
-      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-09">
+      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-10">
         <front>
 	  <title>OAuth 2.0 Authorization Server Metadata</title>
 
@@ -1459,7 +1459,7 @@
 
 	  <date day="10" month="March" year="2017" />
         </front>
-	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-09"/>
+	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-10"/>
       </reference>
 
       <reference anchor="JWT" target="http://tools.ietf.org/html/rfc7519">
@@ -1568,6 +1568,7 @@
     <list style="symbols">
       <t>Explicitly state that the base64url encoding of the tbh value doesn't include
           any trailing pad characters, line breaks, whitespace, etc.</t>
+      <t>Update to latest references for tokbind drafts and draft-ietf-oauth-discovery.</t>
     </list>
   </t>
       <t>
