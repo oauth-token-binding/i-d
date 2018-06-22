@@ -312,7 +312,7 @@
 	to the Token Binding implementation so that it is sent as
 	the Referred Token Binding ID in the request to the authorization server.
 	This functionality provided by Token Binding implementations is described in
-	Section 5 (Implementation Considerations) of
+	Section 6 (Implementation Considerations) of
 	<xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>.
       </t>
       <t>
@@ -1569,6 +1569,8 @@
       <t>Explicitly state that the base64url encoding of the tbh value doesn't include
           any trailing pad characters, line breaks, whitespace, etc.</t>
       <t>Update to latest references for tokbind drafts and draft-ietf-oauth-discovery.</t>
+      <t>Update reference to Implementation Considerations in draft-ietf-tokbind-https,
+          which is section 6 rather than 5.</t>
     </list>
   </t>
       <t>
