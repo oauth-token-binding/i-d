@@ -1408,7 +1408,7 @@
 
 
 
-      <reference anchor="OpenID.TokenBinding" target="http://openid.net/specs/openid-connect-token-bound-authentication-1_0-02.html">
+      <reference anchor="OpenID.TokenBinding" target="http://openid.net/specs/openid-connect-token-bound-authentication-1_0-03.html">
         <front>
           <title>OpenID Connect Token Bound Authentication 1.0</title>
 
@@ -1565,7 +1565,7 @@
   <t>
     -08
     <list style="symbols">
-      <t></t>
+      <t>Update reference to -03 of openid-connect-token-bound-authentication.</t>
     </list>
   </t>
   <t>
