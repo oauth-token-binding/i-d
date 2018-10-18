@@ -588,7 +588,7 @@
 	  in an ID Token.
 	  The value of the <spanx style="verb">tbh</spanx> member is the
 	  base64url encoding of the SHA-256 hash of the Token Binding ID.
-      All all trailing pad '=' characters are omitted from the encoded value
+      All trailing pad '=' characters are omitted from the encoded value
       and no line breaks, whitespace, or other additional characters are included.
 	</t>
 	<t>
@@ -694,7 +694,7 @@
       <section anchor="ASMetadata" title="Token Binding Authorization Server Metadata">
         <t>
           Authorization servers supporting Token Binding that also support
-          <xref target="OAuth.AuthorizationMetadata">OAuth 2.0 Authorization Server Metadata</xref>
+          <xref target="RFC8414">OAuth 2.0 Authorization Server Metadata</xref>
           use these metadata values to declare their support for Token Binding
           of access tokens and refresh tokens:
         </t>
@@ -1064,7 +1064,7 @@
           method of authenticating a client to the authorization server.  The values are
           used to indicated supported and utilized client authentication methods
           in authorization server metadata, such as
-          <xref target="OpenID.Discovery"/> and <xref target="OAuth.AuthorizationMetadata"/>,
+          <xref target="OpenID.Discovery"/> and <xref target="RFC8414"/>,
           and in
           <xref target="RFC7591">OAuth 2.0 Dynamic Client Registration Protocol</xref>.
           The values <spanx style="verb">private_key_jwt</spanx> and <spanx style="verb">client_secret_jwt</spanx>
@@ -1244,8 +1244,8 @@
 	<t>
 	  This specification registers the following metadata definitions
 	  in the IANA "OAuth Authorization Server Metadata" registry
-	  <!-- <xref target="IANA.OAuth.Parameters"/> TBD Uncomment once registry has been established -->
-	  established by <xref target="OAuth.AuthorizationMetadata"/>:
+	  <xref target="IANA.OAuth.Parameters"/>
+	  established by <xref target="RFC8414"/>:
 	</t>
 
 	<section anchor="ASMetadataContents" title="Registry Contents">
@@ -1401,7 +1401,7 @@
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7662"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7800"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8174"?>
-
+      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8414"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8471"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8472"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8473"?>
@@ -1426,39 +1426,6 @@
 
           <date day="26" month="October" year="2017"/>
         </front>
-      </reference>
-
-      <reference anchor="OAuth.AuthorizationMetadata" target="http://tools.ietf.org/html/draft-ietf-oauth-discovery-10">
-        <front>
-	  <title>OAuth 2.0 Authorization Server Metadata</title>
-
-	  <author fullname="Michael B. Jones" initials="M.B." surname="Jones">
-	    <organization abbrev="Microsoft">Microsoft</organization>
-	    <address>
-	      <email>mbj@microsoft.com</email>
-	      <uri>http://self-issued.info/</uri>
-	    </address>
-	  </author>
-
-	  <author fullname="Nat Sakimura" initials="N." surname="Sakimura">
-	    <organization abbrev="NRI">Nomura Research Institute, Ltd.</organization>
-	    <address>
-	      <email>n-sakimura@nri.co.jp</email>
-	      <uri>http://nat.sakimura.org/</uri>
-	    </address>
-	  </author>
-
-	  <author fullname="John Bradley" initials="J." surname="Bradley">
-	    <organization abbrev="Ping Identity">Ping Identity</organization>
-	    <address>
-	      <email>ve7jtb@ve7jtb.com</email>
-	      <uri>http://www.thread-safe.com/</uri>
-	    </address>
-	  </author>
-
-	  <date day="10" month="March" year="2017" />
-        </front>
-	<seriesInfo name="Internet-Draft" value="draft-ietf-oauth-discovery-10"/>
       </reference>
 
       <reference anchor="JWT" target="http://tools.ietf.org/html/rfc7519">
@@ -1567,6 +1534,7 @@
     <list style="symbols">
       <t>Update reference to -03 of openid-connect-token-bound-authentication.</t>
       <t>Update the references to the core token binding specs, which are now RFCs.</t>
+      <t>Update reference to AS metadata, which is now RFC.</t>
     </list>
   </t>
   <t>
