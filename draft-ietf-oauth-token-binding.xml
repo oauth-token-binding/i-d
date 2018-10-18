@@ -83,10 +83,10 @@
     <section anchor="Introduction" title="Introduction">
       <t>
 	This specification enables OAuth 2.0 <xref target="RFC6749"/> implementations to apply
-	Token Binding (<xref target="I-D.ietf-tokbind-negotiation">
+	Token Binding (<xref target="RFC8472">
   TLS Extension for Token Binding Protocol Negotiation</xref>,
-	<xref target="I-D.ietf-tokbind-protocol">The Token Binding Protocol Version 1.0</xref>
-	and <xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>)
+	<xref target="RFC8471">The Token Binding Protocol Version 1.0</xref>
+	and <xref target="RFC8473">Token Binding over HTTP</xref>)
   to Access Tokens, Authorization Codes, Refresh Tokens,
   JWT Authorization Grants, and JWT Client Authentication.
   This cryptographically binds these tokens to a client's Token Binding key
@@ -116,7 +116,7 @@
 	  the term "User Agent" defined by <xref target="RFC7230">RFC 7230</xref>,
 	  and
 	  the terms "Provided", "Referred", "Token Binding" and "Token Binding ID"
-	  defined by <xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>.
+	  defined by <xref target="RFC8473">Token Binding over HTTP</xref>.
 	</t>
       </section>
     </section>
@@ -125,7 +125,7 @@
       <t>
 	Token Binding of refresh tokens is a straightforward first-party scenario,
 	applying term "first-party" as used in
-	<xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>.
+	<xref target="RFC8473">Token Binding over HTTP</xref>.
   It cryptographically binds the refresh token to the client's Token Binding key
   pair, possession of which is proven on the TLS connections between the
   client and the token endpoint.
@@ -133,7 +133,7 @@
 	both retrieved by the client from the token endpoint
 	and sent by the client to the token endpoint.
 	Unlike the federation use cases described in
-	<xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>, Section 4,
+	<xref target="RFC8473">Token Binding over HTTP</xref>, Section 4,
 	and the access token case described in the next section,
 	only a single TLS connection is involved in the refresh token case.
       </t>
@@ -284,7 +284,7 @@
   client and the protected resource.
 	Token Binding is applied to access tokens in a similar manner to that
 	described in
-	<xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>, Section 4 (Federation Use Cases).
+	<xref target="RFC8473">Token Binding over HTTP</xref>, Section 4 (Federation Use Cases).
 	It also builds upon the mechanisms for Token Binding of ID Tokens defined in
 	<xref target="OpenID.TokenBinding">OpenID Connect Token Bound Authentication 1.0</xref>.
       </t>
@@ -312,7 +312,7 @@
 	the Referred Token Binding ID in the request to the authorization server.
 	This functionality provided by Token Binding implementations is described in
 	Implementation Considerations of
-	<xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>, Section 6.
+	<xref target="RFC8473">Token Binding over HTTP</xref>, Section 6.
       </t>
       <t>
 	Note that to obtain this Token Binding ID,
@@ -799,10 +799,10 @@
         <section anchor="NativeCodeVerifier" title="Code Verifier">
           <t>
             Upon receipt of the authorization code, the client sends the access
-            token request to the token endpoint. The <xref target="I-D.ietf-tokbind-protocol">Token Binding Protocol</xref>
+            token request to the token endpoint. The <xref target="RFC8471">Token Binding Protocol</xref>
             is negotiated on the TLS connection between the client and the authorization server and the
             <spanx style="verb">Sec-Token-Binding</spanx> header, as defined in
-            <xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>,
+            <xref target="RFC8473">Token Binding over HTTP</xref>,
             is included in the access token request. The authorization server extracts the
             Provided Token Binding ID from the header value, hashes it with SHA-256, and compares
             it to the <spanx style="verb">code_challenge</spanx> value previously associated with the authorization code.
@@ -874,7 +874,7 @@
             to the authorization server's authorization endpoint as the Referred Token Binding ID.
             Typically, this is done with an HTTP redirection response and the
             <spanx style="verb">Include-Referred-Token-Binding-ID</spanx> header, as defined in
-            <xref target="I-D.ietf-tokbind-https">Token Binding over HTTP</xref>, Section 5.3.
+            <xref target="RFC8473">Token Binding over HTTP</xref>, Section 5.3.
           </t>
           <t>
             For this Token Binding method of PKCE, <spanx style='verb'>referred_tb</spanx>
@@ -1402,9 +1402,9 @@
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.7800"?>
       <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8174"?>
 
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-protocol-19.xml' ?>
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-https-17.xml' ?>
-      <?rfc include='http://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.draft-ietf-tokbind-negotiation-14.xml' ?>
+      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8471"?>
+      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8472"?>
+      <?rfc include="http://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.8473"?>
 
 
 
@@ -1566,6 +1566,7 @@
     -08
     <list style="symbols">
       <t>Update reference to -03 of openid-connect-token-bound-authentication.</t>
+      <t>Update the references to the core token binding specs, which are now RFCs.</t>
     </list>
   </t>
   <t>
