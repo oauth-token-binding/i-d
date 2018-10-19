@@ -1538,8 +1538,8 @@
     -08
     <list style="symbols">
       <t>Update reference to -03 of openid-connect-token-bound-authentication.</t>
-      <t>Update the references to the core token binding specs, which are now RFCs.</t>
-      <t>Update reference to AS metadata, which is now RFC.</t>
+      <t>Update the references to the core token binding specs, which are now RFCs 8471, 8472, and 8473.</t>
+      <t>Update reference to AS metadata, which is now RFC 8414.</t>
       <t>Add chairs and ADs to the Acknowledgements.</t>
     </list>
   </t>
